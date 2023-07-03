@@ -33,7 +33,7 @@ require(SpaceANOVA)
 
 ## Loading the example datasets
 
-Next, we import the example files named, "Marker_Data.csv" and "Clinical_Data.csv". The first one has expression data of five markers ($p$ = 5), HLA-DR, CD45RO, H3K27me3, H3K9ac and HLA_Class_1 for 39 subjects. The second one has data of two clinical outcomes, recurrence and survival and one covariate, Age for the same set of subjects. Both of these files are extracted from the triple-negative breast cancer MIBI data first published in Keren et. al. 2018. The files have a common column named "ID" denoting subject IDs.
+Next, we import the type 1 diabetis melitus (T1DM) IMC dataset.
 
 ```{r loading the marker expression, out.width = "50%"}
 
