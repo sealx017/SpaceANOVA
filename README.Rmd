@@ -43,15 +43,15 @@ knitr::kable(head(IMC_T1DM), format="markdown")
 
 ```
 
-## Perform the analysis
+## Compute the summary functions and perform association analysis
 
 * We start by showing how to compute the MI-based measures, EQMI\*, EQMI, and CSQMI (Principe 2010) between any arbitrary set of random variables (r.v.'s) from a general data-frame i.e., when the data does not necessarily come from multiplex imaging platforms. We create a matrix named Data_matrix with 2500 samples and 5 columns corresponding to five r.v.'s and use it in the function named QMI to estimate the measures.
 
 
 
-```{r Computing EQMI*, EQMI and CSQMI with an arbitrary data matrix, echo = T, results = T}
+```{r Computing spatial summary functions, and performing both univariate and multivariate differential co-occurrence analysis, echo = T, results = T}
 
-Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 1), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20,  print = T)
+Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20,  print = T, cores = 8)
 
 ```
 
@@ -66,7 +66,6 @@ We return to the analysis of multiplex imaging data. We compute the EQMI\* of al
 
 ## Association testing using CoxPH model
 
-### Association testing with survival outcome
 
 Using the vector of estimated EQMI\* of all the subjects, we perform association analysis with two clinical outcomes, survival and recurrence. We have the outcomes, the time to death and the time to recurrence and the respective censoring indicators (= 0 for an event) as the columns of the matrix named clinical_data. We have one single covariate, Age in the same matrix. Below, we create a matrix named surv_dat with all the subject IDs and their survival outcomes, and another matrix named covariates with the subject IDs and available covariates which, in this case, is just Age. We then use the function Cox_PH to fit the proportional hazard (PH) model outputting a table of p-values. To add higher order terms in the PH model, change degree to > 1. 
 

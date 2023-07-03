@@ -17,6 +17,7 @@
 #' @param perm is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.
 #' @param nPerm is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o
 #' @param print is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.
+#' @param cores is an integer denoting the number of cores to be used.
 #'
 #' @return It returns a list with the estimated summary functions and other input parameters to be passed on to
 #' the downstream functions.
@@ -24,7 +25,7 @@
 #' @export
 
 Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset = NULL,
-                         celltypes = NULL, Hard_ths = 10, perm = TRUE, nPerm = 19, print = F)
+                         celltypes = NULL, Hard_ths = 10, perm = TRUE, nPerm = 19, print = F, cores = 8)
 {
   L = K = g = Image_counts = list()
   if(is.null(ID_subset) == T){IDs = unique(data$ID)
@@ -69,7 +70,7 @@ Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset =
         subset = which(celltypes %in% good_phenotypes)
 
         if(perm == "TRUE"){
-          Perm = Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R, nPerm = nPerm)
+          Perm = Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R, nPerm, parallel)
           K_theo = Perm[[1]]; L_theo = Perm[[2]]; g_theo = Perm[[3]]
         }
 

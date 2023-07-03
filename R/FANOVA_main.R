@@ -280,6 +280,7 @@ Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
 #' @param perm is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.
 #' @param nPerm is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o
 #' @param print is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.
+#' @param parallel is an integer denoting the number of cores to be used.
 #'
 #' @return It returns a list with the estimated summary functions and other input parameters to be passed on to
 #' the downstream functions.
@@ -288,9 +289,10 @@ Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
 
 All_in_one <- function(data, fixed_r = seq(0, 100, by = 1), Summary_function = "g",
                        ID_subset = NULL, celltypes = NULL, Hard_ths = 10,
-                       perm = TRUE, nPerm = 50,  print = F){
+                       perm = TRUE, nPerm = 50,  print = F, cores = 8){
   Final_result = Spat.summary(data = data, fixed_r, ID_subset,
-                              celltypes, Hard_ths, perm = perm, nPerm = nPerm, print = print)
+                              celltypes, Hard_ths, perm = perm, nPerm = nPerm,
+                              print = print, cores = cores)
   Functional_results = Functional.objects(Final_result = Final_result,
                                           Summary_function = Summary_function,
                                           perm = perm, print = print)
