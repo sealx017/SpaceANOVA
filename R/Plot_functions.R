@@ -190,7 +190,7 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
     if(is.null(palette) == FALSE){assign(paste0("simple_mean_", r), one_subject_one_image  %>%
              ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
              theme(legend.position = "bottom",
-             plot.title = element_text(hjust = 0.5, size = 4)) +
+             plot.title = element_text(hjust = 0.5, size = 8)) +
              scale_color_manual(values = palette) +
              guides(colour = guide_legend(override.aes = list(size = 2))) +
              ggtitle(paste0("Image ",  image_id, " from subject ", ID))
@@ -198,14 +198,14 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
     else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
              ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
              theme(legend.position = "bottom",
-                   plot.title = element_text(hjust = 0.5, size = 4), title.s) +
+                   plot.title = element_text(hjust = 0.5, size = 8), title.s) +
              guides(colour = guide_legend(override.aes = list(size = 2))) +
              ggtitle(paste0("Image ",  image_id, " from subject ", ID)))}
 
     r = r+1
   }
 
-  three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2, simple_mean_3),
+  three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2, simple_mean_3, simple_mean_4),
                              ncol = 2, nrow = 2, main = paste0("Celltypes: ", paste0(pairs, collapse = ", ")))
   return(three_plots)
 }

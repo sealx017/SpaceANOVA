@@ -1,16 +1,8 @@
 ---
 title: "SpaceANOVA"
 author: Souvik Seal
-output: 
- html_document
+output: rmarkdown::github_document
 ---
-<style type="text/css">
-.main-container {
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
