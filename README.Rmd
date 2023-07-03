@@ -17,7 +17,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-This is an R package implementing the proposed method from the paper, "MIAMI: Mutual Information-based Analysis of Multiplex Imaging data". The package provides a thorough pipeline for performing marker co-expression analysis of multiplex imaging data, such as Vectra (Huang et. al. 2013) and MIBI data (Keren et. al. 2019). The package also provides standalone functions for computing several mutual information (MI) theoretic measures (Principe 2010), such as EQMI*, EQMI and CSQMI for quantifying the dependence between random variables in general datasets (definitions are available below in the appendix).
+This is an R package implementing the proposed method from the paper, "SpaceANOVA: Spatial co-occurrence analysis of cell types in multiplex imaging data using point
+process and functional ANOVA". It can be used to study differential spatial co-occurrence of pairs of cell types across multiple groups, such as case/control.
 
 ## Loading the package
 
@@ -137,15 +138,9 @@ p = biv_dens_plot(f_12, maxs = c(q1, q2))
 
 ## References
 
-a\) Huang, W., Hennrick, K., & Drew, S. (2013). A colorful future of quantitative pathology: validation of Vectra technology using chromogenic multiplexed immunohistochemistry and prostate tissue microarrays. Human pathology, 44(1), 29-38.
+a\) Baddeley, A., Rubak, E., and Turner, R. (2015). Spatial point patterns: methodology and applications with R. CRC press.
 
-b\) Keren, L., Bosse, M., Thompson, S., Risom, T., Vijayaragavan, K., McCaffrey, E., ... & Angelo, M. (2019). MIBI-TOF: A multiplexed imaging platform relates cellular phenotypes and tissue structure. Science advances, 5(10), eaax5851.
+b\) Zhang, J.-T. (2013). Analysis of variance for functional data. CRC press.
 
-c\) Principe, J. C. (2010). Information theoretic learning: Renyi's entropy and kernel perspectives. Springer Science & Business Media.
 
-d\) Keren, L., Bosse, M., Marquez, D., Angoshtari, R., Jain, S., Varma, S., ... & Angelo, M. (2018). A structured tumor-immune microenvironment in triple negative breast cancer revealed by multiplexed ion beam imaging. Cell, 174(6), 1373-1387.
-
-e\) Wand, M. P., & Jones, M. C. (1994). Multivariate plug-in bandwidth selection. Computational Statistics, 9(2), 97-116.
-
-f\) Silverman, B. W. (2018). Density estimation for statistics and data analysis. Routledge.
 
