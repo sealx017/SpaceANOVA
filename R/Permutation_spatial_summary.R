@@ -3,7 +3,8 @@
 #' @param PP_obj is a spatstat object imported from the Spatial_summary function.
 #' @param n_celltypes is the total number of cell types.
 #' @param subset is the subset of cell types considered.
-#' @param R is the maximum of the grid values of radius r.
+#' @param fixed_r is the vector of grid values of radius r.
+#' @param R is the maximum of the grid values.
 #' @param nPerm is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o
 #'
 #' @return It returns a list with the permutation-mean of summary functions
@@ -11,7 +12,7 @@
 #' @export
 
 
-Perm_spat <-function(PP_obj, n_celltypes, subset, R, nPerm = 19)
+Perm_spat <-function(PP_obj, n_celltypes, subset, fixed_r, R, nPerm = 19)
 {
   perm_func <- function(i){
     PP_perm <- PP_obj
