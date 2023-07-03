@@ -14,7 +14,7 @@ Plot.heatmap <- function(p_matrix, main = "SpaceANOVA Univ."){
   pal <- grDevices::colorRampPalette(colours)(length(breaks))
 
   return(pheatmap::pheatmap(-log10(p_matrix), cluster_rows = F, cluster_cols = F,
-                     color=pal, main=main, fontsize = 8))
+                     color=pal, main=main, fontsize = 12))
 }
 
 #' @title Generates plots of summary functions for a pair of cell types

@@ -76,7 +76,7 @@ print(Univ_p)
 
 Display the -log10 of the p-values using heatmap.
 
-```{r P-value visualization,  out.width="40%"}
+```{r P-value visualization,  out.width="50%"}
 Plot.heatmap(Univ_p, main = "SpaceANOVA Univ.")
 Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 
