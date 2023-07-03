@@ -101,7 +101,7 @@ Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset =
     Image_counts[[idc]] = Image_all
 
     idc = idc + 1
-    print(idc)
+    #print(idc)
   }
 
   Final_result = list(K, L, g, Image_counts, fixed_r, IDs, celltypes, Hard_ths)

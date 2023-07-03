@@ -288,7 +288,7 @@ Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
 
 All_in_one <- function(data, fixed_r = seq(0, 100, by = 1), Summary_function = "g",
                        ID_subset = NULL, celltypes = NULL, Hard_ths = 10,
-                       perm = TRUE, nPerm = 50,  print = F, cores = 8){
+                       perm = TRUE, nPerm = 50,  print = T, cores = 8){
   Final_result = Spat.summary(data = data, fixed_r, ID_subset,
                               celltypes, Hard_ths, perm = perm, nPerm = nPerm,
                               print = print, cores = cores)

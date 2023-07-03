@@ -14,7 +14,7 @@ All_in_one(
   Hard_ths = 10,
   perm = TRUE,
   nPerm = 50,
-  print = F,
+  print = T,
   cores = 8
 )
 }
