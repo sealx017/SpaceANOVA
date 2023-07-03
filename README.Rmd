@@ -27,6 +27,7 @@ We install and load the developmental version of SpaceANOVA from GitHub.
 ```{r loading packages, message=FALSE}
 
 suppressMessages(devtools::install_github('sealx017/SpaceANOVA'))
+require(spatstat)
 require(SpaceANOVA)
 
 ```
@@ -60,8 +61,6 @@ We return to the analysis of multiplex imaging data. We compute the EQMI\* of al
 
 ```{r EQMI_star_computation}
 
-EQMI_vector = QMI_all(marker_data, bandwidth = "Ind", measure = "EQMI_star", progress_bar = "False")
-knitr::kable(head(EQMI_vector), format="markdown")
 
 ```
 
@@ -73,58 +72,8 @@ Using the vector of estimated EQMI\* of all the subjects, we perform association
 
 ```{r CoxPh model studying association between EQMI and survival}
 
-surv_dat = clinical_data[,c(1,4:5)]
-covariates = clinical_data[,c(1,6)]
-SurvCox = Cox_PH(surv_dat, covariates, EQMI_vector, degree = 1)
-knitr::kable(SurvCox, format="markdown")
 
 ```
-
-### Association testing with recurrence outcome
-
-Below, we create a matrix named recur_dat with all the subject IDs and their recurrence outcomes, and use the same covariates matrix as earlier. We again use the Cox_PH function and get the p-values.
-
-```{r CoxPh model studying association between EQMI and recurrence}
-
-recur_dat = clinical_data[,c(1:3)]
-RecurCox = Cox_PH(recur_dat, covariates, EQMI_vector, degree = 1)
-knitr::kable(RecurCox, format="markdown")
-
-```
-
-## Additional tools: Compute and plot univariate and bivariate kernel densities of the markers
-
-#### Univariate marginal density
-
-We provide a few basic functions to estimate and plot the univariate marginal densities of the random variables. We go back to the matrix named Data_matrix which has 2500 samples and 5 columns corresponding to five r.v.'s. We look at first two columns (call them, X_1 and X_2) and estimate their kernel density estimates as f_1 and f_2 using the function dens_univ. Next, using the function univ_dens_plot, we plot f_1 and f_2. The default number of grids is, ngrids = 1024 and the bandwidth parameter is selected using Silverman's rule.
-
-```{r Computing univ density, fig.show = "hold", out.width = "50%"}
-
-X_1 = Data_matrix[,1]
-X_2 = Data_matrix[,2]  
-
-f_1 = univ_dens(X_1, ngrids = 1024)
-f_2 = univ_dens(X_2, ngrids = 1024)
-
-p1 = univ_dens_plot(f_1)
-p2 = univ_dens_plot(f_2)
-
-```
-
-#### Bivariate joint density
-
-We estimate the bivariate joint density of X_1 and X_2, as f_12 using the function biv_dens. Next, using the function biv_dens_plot, we plot f_12. The default number of grids is, ngrids = 512 and the bandwidth matrix used is the multivariate plug-in bandwidth matrix described in Wand, M. P., & Jones, M. C. (1994). It may be easy to interpret the estimated density focusing only on the smaller values of $X_1$ and $X_2$ since both the r.v.'s usually have most of the values close to 0. Hence, we use two thresholds (q1, q2) to display the estimated density only between 70\% quantiles of both the r.v.'s. 
-
-```{r Computing biv density}
-
-
-f_12 = biv_dens(cbind(X_1, X_2), ngrids = 512)
-q1 = quantile(X_1, 0.7); q2 = quantile(X_2, 0.7)
-p = biv_dens_plot(f_12, maxs = c(q1, q2))
-
-
-```
-
 
 ## References
 
