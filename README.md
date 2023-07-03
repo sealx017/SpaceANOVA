@@ -88,14 +88,9 @@ permutation envelope.
 ``` r
 
 Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20, cores = 8)
-# [1] 2
-# [1] 3
-# [1] 4
-# [1] 5
-# [1] 6
-# [1] 7
-# [1] 8
-# [1] 9
+# [1] "Summary functions computed!"
+# [1] "Functions set up for FANOVA!"
+# [1] "FANOVA complete!"
 ```
 
 ## Extracting p-values
@@ -108,20 +103,20 @@ p_res = p_extract(Final_result)
 Univ_p = p_res[[1]]
 Mult_p = p_res[[2]]
 print(Univ_p)
-#              Others           Tc          Th        alpha        delta
-# Others 6.989404e-01 1.541579e-01 0.639976780 6.119006e-15 5.954651e-05
-# Tc     1.554234e-01 1.071359e-05 0.653393507 6.877370e-10 3.253652e-01
-# Th     6.605091e-01 6.668094e-01 0.175159285 2.320952e-03 1.942847e-03
-# alpha  4.778777e-15 4.781497e-10 0.004253033 2.359871e-12 1.574602e-04
-# delta  7.254125e-05 2.934233e-01 0.001149728 1.411979e-04 4.138686e-05
-# beta   8.460704e-02 1.927666e-01 0.003808833 5.735812e-02 2.697225e-04
+#              Others           Tc           Th        alpha        delta
+# Others 7.024697e-01 1.573991e-01 0.6382938507 6.674092e-15 5.816769e-05
+# Tc     1.586754e-01 1.184891e-05 0.6527697145 6.337346e-10 2.884948e-01
+# Th     6.580101e-01 6.696070e-01 0.1670743225 3.603094e-03 7.285186e-04
+# alpha  5.226819e-15 4.773142e-10 0.0054382865 1.354056e-12 1.578452e-04
+# delta  7.196331e-05 2.449268e-01 0.0002732137 1.480241e-04 5.430399e-05
+# beta   7.662073e-02 2.182450e-01 0.0182817150 5.314018e-02 1.998622e-04
 #                beta
-# Others 7.965325e-02
-# Tc     1.926318e-01
-# Th     2.127004e-03
-# alpha  3.391455e-02
-# delta  9.125309e-06
-# beta   2.720038e-01
+# Others 7.249158e-02
+# Tc     2.179089e-01
+# Th     9.915701e-03
+# alpha  2.861402e-02
+# delta  5.455496e-06
+# beta   3.044358e-01
 ```
 
 ## Heatmap of -log10 of p-values
@@ -185,12 +180,12 @@ Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fva
 # [[1]]
 ```
 
-<img src="README_files/figure-gfm/plotting summary functions 2-1.png" width="90%" height="70%" />
+<img src="README_files/figure-gfm/plotting summary functions 2-1.png" width="100%" height="80%" />
 
     # 
     # [[2]]
 
-<img src="README_files/figure-gfm/plotting summary functions 2-2.png" width="90%" height="70%" />
+<img src="README_files/figure-gfm/plotting summary functions 2-2.png" width="100%" height="80%" />
 
 ## Visualizing cellular organization
 
@@ -208,7 +203,7 @@ palette = c("darkorchid1","red", "cyan", "grey", "blue", "green") #assign colors
 Plot.cellTypes(data = IMC_T1DM, ID = "6126", palette = palette)
 ```
 
-<img src="README_files/figure-gfm/plotting celluar organization-1.png" width="800px" height="800px" />
+<img src="README_files/figure-gfm/plotting celluar organization-1.png" width="100%" height="700px" />
 
     # TableGrob (2 x 2) "arrange": 4 grobs
     #   z     cells    name           grob
@@ -218,7 +213,7 @@ Plot.cellTypes(data = IMC_T1DM, ID = "6126", palette = palette)
     # 4 4 (2-2,2-2) arrange gtable[layout]
     Plot.cellTypes(data = IMC_T1DM, ID = "6414", palette = palette)
 
-<img src="README_files/figure-gfm/plotting celluar organization-2.png" width="800px" height="800px" />
+<img src="README_files/figure-gfm/plotting celluar organization-2.png" width="100%" height="700px" />
 
     # TableGrob (2 x 2) "arrange": 4 grobs
     #   z     cells    name           grob

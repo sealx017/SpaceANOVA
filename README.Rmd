@@ -114,7 +114,7 @@ Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fva
 
 We canvisualize cellular organization in different images of every subject. Here, 4 images each are shown for two subjects, "6126" from group "Non-diabetic" and "6414" from group "Onset". 
 
-```{r plotting celluar organization,  out.width="500px", out.height = "600px"}
+```{r plotting celluar organization,  out.width="100%", out.height = "700px"}
 table(IMC_T1DM$cellType)
 palette = c("darkorchid1","red", "cyan", "grey", "blue", "green") #assign colors to cell types 
 
