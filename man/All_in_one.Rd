@@ -48,8 +48,7 @@ would be dropped from the analysis (B, C,.. are other cell types).}
 \item{parallel}{is an integer denoting the number of cores to be used.}
 }
 \value{
-It returns a list with the estimated summary functions and other input parameters to be passed on to
-the downstream functions.
+It returns a list with the p-values and functional profiles for further visualization.
 }
 \description{
 Performs the entire analysis from computing summary functions to FANOVA in a

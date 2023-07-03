@@ -101,7 +101,7 @@ Plot.functions(Functional_results, pairs = c("alpha", "alpha"), Fvals = Pointwis
 
 We can also visualize cellular organization in different images of every subject. 
 
-```{r plotting summary functions}
+```{r plotting celluar organization}
 
 ```
 

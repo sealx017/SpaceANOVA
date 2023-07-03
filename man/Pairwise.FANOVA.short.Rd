@@ -6,7 +6,7 @@
 \usage{
 Pairwise.FANOVA.short(
   Functional_results = Functional_results,
-  which_mean = NULL,
+  which_mean = "simple",
   pairs = NULL,
   print = F
 )
@@ -14,7 +14,7 @@ Pairwise.FANOVA.short(
 \arguments{
 \item{Functional_results}{is a list output from the function "Functional.objects".}
 
-\item{which_mean}{is NULL (default) or "weighted" or "depth" depending on which type of
+\item{which_mean}{is "simple" (default) or "weighted" or "depth" depending on which type of
 mean to be used. NULL corresponds to simple mean, while "weighted" and "depth" correspond to
 weighted and functional depth based means, respectively.}
 
