@@ -92,7 +92,7 @@ Functional.objects <- function(Final_result = Final_result,
           wide_dat = data.frame(image_funcs, range = t(t(arg_range)),
                                 ID = i, Group = unique(image_info$Group))
 
-          long_dat = as.matrix(dplyr::gather(wide_dat, im, func, 1:dim(image_funcs)[2]))
+          long_dat = as.matrix(gather(wide_dat, im, func, 1:dim(image_funcs)[2]))
 
           image_dat_frame[idc, m1, m2] = list(long_dat)
 
