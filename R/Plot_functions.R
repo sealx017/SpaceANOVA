@@ -72,7 +72,6 @@ Plot.functions<- function(Functional_results = Functional_results,
         func_dat = func_dat[good_rows, ]
         All_func_dat = rbind(All_func_dat, data.frame(ID = func_dat[,2], Group = func_dat[,3],
                                                       imageID = func_dat[,4],
-                                                      #imageID = paste0(func_dat[,2], "_", func_dat[,4]),
                                                       range = as.numeric(func_dat[,1]), func = as.numeric(func_dat[,5])))
       }
     }
@@ -94,7 +93,7 @@ Plot.functions<- function(Functional_results = Functional_results,
 
   simple_mean = ggplot(All_means_long, aes(x = range, y = Mean, group = ID))+
     geom_line(size = 0.5) + facet_wrap(~Group, labeller = label_both) +
-    ggtitle(paste0('Mean of centered summary functions of pair:  \n (', paste0(pairs, collapse = ", ") , ") ",
+    ggtitle(paste0('Mean of centered summary functions of pair:  \n (', paste0(pair, collapse = ", ") , ") ",
                    "across subjects")) +
     stat_summary(aes(y = Mean, group=1), fun.y = mean, colour = "red",
                  geom = "line", group=1, size = 1)+
@@ -113,7 +112,7 @@ Plot.functions<- function(Functional_results = Functional_results,
     geom_line(size=0.5) + facet_wrap(~Group, labeller = label_both) +
     stat_summary(aes(y = func, group=1),
                  fun.y = mean, colour = "red", size = 1, geom = "line", group=1) +
-    ggtitle(paste0('Centered summary functions of pair: \n  (', paste0(pairs, collapse = ", ") , ")",
+    ggtitle(paste0('Centered summary functions of pair: \n  (', paste0(pair, collapse = ", ") , ")",
                    " across images")) +
     theme(plot.title = element_text(hjust = 0.5, size = 10),
           legend.title = element_text(size=10), #change legend title font size

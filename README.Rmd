@@ -93,7 +93,7 @@ Next, we can check the summary functions corresponding to those pairs of cell ty
 Pointwise_Fvals = Final_result[[1]][[2]]
 Functional_results = Final_result[[2]]
 
-Plot.functions(Functional_results, pairs = c("alpha", "alpha"), Fvals = Pointwise_Fvals)
+Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise_Fvals)
 
 ```
 
