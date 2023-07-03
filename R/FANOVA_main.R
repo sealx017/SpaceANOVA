@@ -83,7 +83,7 @@ Functional.objects <- function(Final_result = Final_result,
 
 
           usc_obj = fda.usc::fdata(rangeval = arg_range, mdata = t(image_funcs))
-          depth_based_mean = suppressMessages(t(fda.usc::func.trim.mode(usc_obj, trim = trimming_cutoff)$data))
+          depth_based_mean = suppressMessages(t(func.trim.mode(usc_obj, trim = trimming_cutoff)$data))
 
           Mean_frame[ idc, m1, m2, ] = rowMeans(image_funcs, na.rm = T)
           Wmean_frame[ idc, m1, m2, ] = WM(image_funcs, weights)
@@ -92,11 +92,11 @@ Functional.objects <- function(Final_result = Final_result,
           wide_dat = data.frame(image_funcs, range = t(t(arg_range)),
                                 ID = i, Group = unique(image_info$Group))
 
-          long_dat = as.matrix(gather(wide_dat, im, func, 1:dim(image_funcs)[2]))
+          long_dat = as.matrix(dplyr::gather(wide_dat, im, func, 1:dim(image_funcs)[2]))
 
           image_dat_frame[idc, m1, m2] = list(long_dat)
 
-          ID_groups[idc, , m1, m2] = c( as.character(i), as.character(unique(image_info$Group)))
+          ID_groups[idc, , m1, m2] = c(as.character(i), as.character(unique(image_info$Group)))
         }else{
           Mean_frame[ idc, m1, m2, ] = Wmean_frame[ idc, m1, m2, ] = Depth_mean_frame[ idc, m1, m2, ] = 0
           image_dat_frame[idc, m1, m2] = list(0)

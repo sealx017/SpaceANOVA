@@ -28,6 +28,8 @@ We install and load the developmental version of SpaceANOVA from GitHub.
 
 suppressMessages(devtools::install_github('sealx017/SpaceANOVA'))
 require(spatstat)
+require(tidyr)
+require(fda.usc)
 require(SpaceANOVA)
 
 ```
@@ -51,15 +53,15 @@ knitr::kable(head(IMC_T1DM), format="markdown")
 
 ```{r Computing spatial summary functions, and performing both univariate and multivariate differential co-occurrence analysis, echo = T, results = T}
 
-Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20,  print = T, cores = 8)
+Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20, cores = 8)
 
 ```
 
-## Computing subject specific EQMI* values with the imaging data
+## Extracting p-values 
 
 We return to the analysis of multiplex imaging data. We compute the EQMI\* of all the subjects using the function QMI_all and store the values in a matrix whose every row corresponds to a subject. 
 
-```{r EQMI_star_computation}
+```{r P-valu extraction}
 
 
 ```
