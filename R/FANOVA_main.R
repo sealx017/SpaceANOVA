@@ -282,8 +282,7 @@ Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
 #' @param print is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.
 #' @param parallel is an integer denoting the number of cores to be used.
 #'
-#' @return It returns a list with the estimated summary functions and other input parameters to be passed on to
-#' the downstream functions.
+#' @return It returns a list with the p-values and functional profiles for further visualization.
 #'
 #' @export
 
@@ -300,6 +299,25 @@ All_in_one <- function(data, fixed_r = seq(0, 100, by = 1), Summary_function = "
 
   return(list(res,   Functional_results))
 }
+
+
+
+#' @title Extracts p-values
+#'
+#' @param Final_result is the output from the function All_in_one.
+#'
+#' @return It returns a list of two dataframes of p-values corresponding to SpaceANOVA Univ. and
+#' SpaceANOVA Mult.
+#'
+#' @export
+#'
+p_extract <- function(Final_result){
+  res1 = Final_result[[1]]
+  res = res1[[1]];
+  Univ_p = res[1, , ]; Mult_p = res[3, , ]
+  colnames(Univ_p) = rownames(Univ_p) = colnames(Mult_p) = rownames(Mult_p) = res1[[3]]
+  return(list(Univ_p, Mult_p))
+  }
 
 
 WM<-function(Func_mat, weights){

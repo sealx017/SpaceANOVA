@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Souvik Seal 
 Maintainer: Souvik Seal <sealso@musc.edu>
 Description: The package can be used to test if pairs of cell types exhibit differential spatial co-occurrence patterns across multiple groups
-Imports: spatstat, tidyr, dplyr, fda.usc, pheatmap
+Imports: spatstat, tidyr, dplyr, fda.usc, pheatmap, ggplot2, cowplot
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

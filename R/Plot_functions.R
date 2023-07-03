@@ -1,4 +1,15 @@
-Plot.FANOVA <- function(Functional_results = Functional_results,
+Plot.heatmap <- function(p_matrix, main = "SpaceANOVA Univ."){
+  breaks <- c(0, 10, 0.5)
+  breaks <- seq(from = breaks[1], to = breaks[2], by = breaks[3])
+  colours = c("#4575B4", "white", "#D73027")
+  pal <- grDevices::colorRampPalette(colours)(length(breaks))
+
+  return(pheatmap::pheatmap(-log10(p_matrix), cluster_rows = F, cluster_cols = F,
+                     color=pal, main=main, fontsize = 8))
+}
+
+
+Plot.functions<- function(Functional_results = Functional_results,
                         pairs = pairs, Fvals = NULL, range_lim = NULL)
 {
   Mean_frame = Functional_results[[1]]
@@ -12,7 +23,6 @@ Plot.FANOVA <- function(Functional_results = Functional_results,
   m1 = which(celltypes == pairs[1])
   m2 = which(celltypes == pairs[2])
   mean_dat = as.data.frame(Mean_frame[ , m1, m2, ])
-  #mean_dat[mean_dat > 5] = 5
   good_IDs = ID_groups[, 1, m1, m2][which(rowSums(abs(mean_dat)) > 0)]
   good_IDs_group = ID_groups[, 2, m1, m2][which(rowSums(abs(mean_dat)) > 0)]
   good_IDs_group = factor(good_IDs_group, levels = unique(good_IDs_group))
@@ -52,12 +62,6 @@ Plot.FANOVA <- function(Functional_results = Functional_results,
   All_func_dat$imageID = factor(All_func_dat$imageID, levels = unique(All_func_dat$imageID))
   All_func_dat$Group = factor(All_func_dat$Group, levels = unique(All_func_dat$Group))
 
-  data = All_func_dat[All_func_dat$range > 0,]
-  data %>%
-    group_by(Group, ID) %>%
-    reframe(n = n())
-
-
   levels(All_means_long$range) = unique(All_func_dat$range)
   All_means_long$range =   as.numeric(levels(All_means_long$range))[All_means_long$range]
   All_means_long$Group = factor(All_means_long$Group, levels = c(levels(All_func_dat$Group)))
@@ -66,7 +70,6 @@ Plot.FANOVA <- function(Functional_results = Functional_results,
     All_means_long = All_means_long[All_means_long$range < range_lim, ]
     All_func_dat = All_func_dat[All_func_dat$range < range_lim, ]
   }
-  All_func_dat[which.max(All_func_dat$func), ]
 
   simple_mean = ggplot(All_means_long, aes(x = range, y = Mean, group = ID))+
     geom_line(size = 0.5) + facet_wrap(~Group, labeller = label_both) +
@@ -85,7 +88,7 @@ Plot.FANOVA <- function(Functional_results = Functional_results,
   #print(simple_mean)
 
 
-  mult_mean = ggplot(data, aes(x = range, y = func, group = imageID))+
+  mult_mean = ggplot(All_func_dat, aes(x = range, y = func, group = imageID))+
     geom_line(size=0.5) + facet_wrap(~Group, labeller = label_both) +
     stat_summary(aes(y = func, group=1),
                  fun.y = mean, colour = "red", size = 1, geom = "line", group=1) +
@@ -103,30 +106,26 @@ Plot.FANOVA <- function(Functional_results = Functional_results,
   }else{
     unidat = data.frame(Fval = c(0, unlist(Fvals_dat[[1]])[1:(length(unique(All_func_dat$range))-1)]),
                         r = unique(All_func_dat$range))
-    UniF = ggplot(unidat,
-                  aes(x = r, y = Fval, group = imageID))+
+    UniF = ggplot(unidat, aes(x = r, y = Fval))+
       geom_point(size=0.5) +
-      ggtitle(paste0('Accompanying pointwise F values')) +
+      ggtitle(paste0('Accompanying point-wise F values')) +
       theme(plot.title = element_text(hjust = 0.5, size = 10),
             legend.title = element_text(size=10), #change legend title font size
             legend.text = element_text(size=10),
             legend.position = "bottom",
             panel.background = element_blank())+ labs(x = "r", y = "F(r)") +
       guides(colour = guide_legend(override.aes = list(size=5)))
-    #geom_hline(yintercept = 1, linetype="dashed", color = "blue", linewidth = 0.5)
 
     Muldat = data.frame(Fval = c(0, unlist(Fvals_dat[[2]])[1:(length(unique(All_func_dat$range))-1)]),
                         r = unique(All_func_dat$range))
-    MulF = ggplot(Muldat,
-                  aes(x = r, y = Fval, group = imageID))+
+    MulF = ggplot(Muldat, aes(x = r, y = Fval))+
       geom_point(size=0.5) +
-      ggtitle(paste0('Accompanying pointwise F values')) +
+      ggtitle(paste0('Accompanying point-wise F values')) +
       theme(plot.title = element_text(hjust = 0.5, size = 10),
             legend.title = element_text(size=10), #change legend title font size
             legend.text = element_text(size=10),
             legend.position = "bottom",
             panel.background = element_blank())+ labs(x = "r", y = "F(r)")
-    #geom_hline(yintercept = 1, linetype="dashed", color = "green", linewidth = 0.5)
 
     simple_mean = cowplot::plot_grid(simple_mean, UniF, align = "h",  axis = "b",
                                      nrow = 1, rel_widths = c(2/3, 1/3))
@@ -139,12 +138,9 @@ Plot.FANOVA <- function(Functional_results = Functional_results,
   }
 }
 
-Plot.cellTypes <- function(data = data, ID = ID, pairs = pairs)
+Plot.cellTypes <- function(data = data, ID = ID)
 {
-  one_subject = data[data$ID == ID & data$cellType %in% c(pairs), ]
-  #one_subject = data[data$ID == ID, ]
-
-
+  one_subject = data[data$ID == ID, ]
   subject_images = unique(one_subject$imageID)
   check_proportions_full = table(one_subject$cellType)
   good_image_counter = matrix(0, nrow = length(subject_images), ncol = 1)

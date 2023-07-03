@@ -29,7 +29,10 @@ We install and load the developmental version of SpaceANOVA from GitHub.
 suppressMessages(devtools::install_github('sealx017/SpaceANOVA'))
 require(spatstat)
 require(tidyr)
+require(dplyr)
 require(fda.usc)
+require(ggplot2)
+require(cowplot)
 require(SpaceANOVA)
 
 ```
@@ -59,22 +62,49 @@ Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summar
 
 ## Extracting p-values 
 
-We return to the analysis of multiplex imaging data. We compute the EQMI\* of all the subjects using the function QMI_all and store the values in a matrix whose every row corresponds to a subject. 
+Extract the p-values of the univariate and multivariate tests: SpaceANOVA Univ. and SpaceANOVA Mult. and print.
 
-```{r P-valu extraction}
+```{r P-value extraction}
+p_res = p_extract(Final_result)
+Univ_p = p_res[[1]]
+Mult_p = p_res[[2]]
+print(Univ_p)
 
+```
+
+## Heatmap of -log10 of p-values 
+
+
+Display the -log10 of the p-values using heatmap.
+
+```{r P-value visualization}
+
+Plot.heatmap(Univ_p, main = "SpaceANOVA Univ.")
+Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 
 ```
 
-## Association testing using CoxPH model
+## Visualizing summary functions
 
+Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. In this case, we visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). We also display the point-wsie F-values which might help to understand which values of the radius r were most influential.
 
-Using the vector of estimated EQMI\* of all the subjects, we perform association analysis with two clinical outcomes, survival and recurrence. We have the outcomes, the time to death and the time to recurrence and the respective censoring indicators (= 0 for an event) as the columns of the matrix named clinical_data. We have one single covariate, Age in the same matrix. Below, we create a matrix named surv_dat with all the subject IDs and their survival outcomes, and another matrix named covariates with the subject IDs and available covariates which, in this case, is just Age. We then use the function Cox_PH to fit the proportional hazard (PH) model outputting a table of p-values. To add higher order terms in the PH model, change degree to > 1. 
+```{r plotting summary functions}
 
-```{r CoxPh model studying association between EQMI and survival}
+Pointwise_Fvals = Final_result[[1]][[2]]
+Functional_results = Final_result[[2]]
 
+Plot.functions(Functional_results, pairs = c("alpha", "alpha"), Fvals = Pointwise_Fvals)
 
 ```
+
+## Visualizing cellular organization
+
+We can also visualize cellular organization in different images of every subject. 
+
+```{r plotting summary functions}
+
+```
+
 
 ## References
 
