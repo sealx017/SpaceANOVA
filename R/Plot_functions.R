@@ -92,10 +92,10 @@ Plot.functions<- function(Functional_results = Functional_results,
   }
 
   simple_mean = ggplot(All_means_long, aes(x = range, y = Mean, group = ID))+
-    geom_line(size = 0.5) + facet_wrap(~Group, labeller = label_both) +
+    geom_line(linewidth = 0.5) + facet_wrap(~Group, labeller = label_both) +
     ggtitle(paste0('Mean of centered summary functions of pair:  \n (', paste0(pair, collapse = ", ") , ") ",
                    "across subjects")) +
-    stat_summary(aes(y = Mean, group=1), fun.y = mean, colour = "red",
+    stat_summary(aes(y = Mean, group=1), fun = mean, colour = "red",
                  geom = "line", group=1, size = 1)+
     theme(plot.title = element_text(hjust = 0.5, size = 10),
           legend.title = element_text(size=10), #change legend title font size
@@ -109,9 +109,9 @@ Plot.functions<- function(Functional_results = Functional_results,
 
 
   mult_mean = ggplot(All_func_dat, aes(x = range, y = func, group = imageID))+
-    geom_line(size=0.5) + facet_wrap(~Group, labeller = label_both) +
+    geom_line(linewidth=0.5) + facet_wrap(~Group, labeller = label_both) +
     stat_summary(aes(y = func, group=1),
-                 fun.y = mean, colour = "red", size = 1, geom = "line", group=1) +
+                 fun = mean, colour = "red", size = 1, geom = "line", group=1) +
     ggtitle(paste0('Centered summary functions of pair: \n  (', paste0(pair, collapse = ", ") , ")",
                    " across images")) +
     theme(plot.title = element_text(hjust = 0.5, size = 10),
@@ -171,7 +171,7 @@ Plot.functions<- function(Functional_results = Functional_results,
 
 
 
-Plot.cellTypes <- function(data = data, ID = ID)
+Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
 {
   one_subject = data[data$ID == ID, ]
   subject_images = unique(one_subject$imageID)
@@ -183,23 +183,24 @@ Plot.cellTypes <- function(data = data, ID = ID)
 
   image_info_wide = reshape(as.data.frame(image_info), idvar = "imageID",
                             timevar = "cellType", direction = "wide")
-  if(pairs[1] == pairs[2]){
-    image_info_wide = image_info_wide[order(image_info_wide[,2], decreasing = T), ]
-  }else{
-    image_info_wide = image_info_wide[order(image_info_wide[,3],
-                                            image_info_wide[,2], decreasing = T), ]
-  }
 
   r = 1
   for(image_id in image_info_wide[1:3, 1]){
     one_subject_one_image = one_subject[one_subject$imageID == image_id, ]
-    assign(paste0("simple_mean_", r), one_subject_one_image  %>%
-             ggplot( aes(x = x, y = y, color = cellType)) +
-             geom_point(size = 1) +
+    if(is.null(palette) == FALSE){assign(paste0("simple_mean_", r), one_subject_one_image  %>%
+             ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 1) +
+             theme(legend.position = "bottom",
+             plot.title = element_text(hjust = 0.5)) +
+             scale_color_manual(values = palette) +
+             guides(colour = guide_legend(override.aes = list(size = 2))) +
+             ggtitle(paste0("Image ",  image_id, " from subject ", ID))
+           )}
+    else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
+             ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 1) +
              theme(legend.position = "bottom",
                    plot.title = element_text(hjust = 0.5)) +
              guides(colour = guide_legend(override.aes = list(size = 2))) +
-             ggtitle(paste0("Image ",  r, " from subject ", ID)))
+             ggtitle(paste0("Image ",  image_id, " from subject ", ID)))}
 
     r = r+1
   }

@@ -27,24 +27,27 @@ We install and load the developmental version of SpaceANOVA from GitHub.
 ```{r loading packages, message=FALSE}
 
 suppressMessages(devtools::install_github('sealx017/SpaceANOVA'))
+require(SpaceANOVA)
+
 require(spatstat)
 require(tidyr)
 require(dplyr)
 require(fda.usc)
 require(ggplot2)
 require(cowplot)
-require(SpaceANOVA)
+require(gridExtra)
 
 ```
 
 ## Loading the example dataset
 
-Next, we import the type 1 diabetis melitus (T1DM) IMC dataset [1]. The input data should have a simple form: a) rows should correspond to individual cells, and b) six columns should correspond to the group, subject, and image indices of the cell, along with it's x,y co-ordinates and cell type. 
+Next, we import the type 1 diabetis melitus (T1DM) IMC dataset [1]. The input data should have a simple form: a) rows should correspond to individual cells, and b) six columns should correspond to the group, subject, and image indices of the cell, along with it's x,y co-ordinates and cell type. In the original dataset, there were three groups of subjects: "Non-diabetic", "Onset", and "Long-duration" (4 in each group). We truncated the dataset to have only the first two groups for simplicity. It should be highlighted that our method can handle any number of groups (more than 2). 
 
 ```{r loading the marker expression, out.width = "50%"}
 
 data("IMC_T1DM")
 knitr::kable(head(IMC_T1DM), format="markdown")
+IMC_T1DM %>% group_by(Group, ID) %>% reframe(n = n()) # check group and subject IDs, and respective cell counts (spread across multiple images)
 
 ```
 
@@ -93,15 +96,25 @@ Next, we can check the summary functions corresponding to those pairs of cell ty
 Pointwise_Fvals = Final_result[[1]][[2]]
 Functional_results = Final_result[[2]]
 
+# Pair: (alpha, alpha)
 Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise_Fvals)
+
+# Pair: (beta, Tc)
+Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fvals)
 
 ```
 
 ## Visualizing cellular organization
 
-We can also visualize cellular organization in different images of every subject. 
+We canvisualize cellular organization in different images of every subject. Here, 3 images are shown for two subjects, "6126" from group "Non-diabetic" and "6414" from group "Onset". 
 
 ```{r plotting celluar organization}
+
+table(IMC_T1DM$cellType)
+palette = c("darkorchid1","red", "cyan", "grey", "blue", "green") #assign colors to cell types 
+
+Plot.cellTypes(data = IMC_T1DM, ID = "6126", palette = palette)
+Plot.cellTypes(data = IMC_T1DM, ID = "6414", palette = palette)
 
 ```
 

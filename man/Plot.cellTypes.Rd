@@ -4,7 +4,7 @@
 \alias{Plot.cellTypes}
 \title{Generates plots of cellular organization of images of a particular subject}
 \usage{
-Plot.cellTypes(data = data, ID = ID)
+Plot.cellTypes(data = data, ID = ID, palette = NULL)
 }
 \arguments{
 \item{data}{is the original data frame with cell level data.}
