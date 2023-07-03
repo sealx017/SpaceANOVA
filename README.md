@@ -18,7 +18,7 @@ suppressMessages(devtools::install_github('sealx017/SpaceANOVA'))
 # Warning in readLines(old_path): incomplete final line found on
 # '/Users/sealso/.R/Makevars'
 # ── R CMD build ─────────────────────────────────────────────────────────────────
-#      checking for file ‘/private/var/folders/8k/tj8qsmdj7_74drqc_slz0rkh0000gp/T/RtmpEsuY0a/remotes1600048c1cd73/sealx017-SpaceANOVA-fbab074/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/8k/tj8qsmdj7_74drqc_slz0rkh0000gp/T/RtmpEsuY0a/remotes1600048c1cd73/sealx017-SpaceANOVA-fbab074/DESCRIPTION’
+#      checking for file ‘/private/var/folders/8k/tj8qsmdj7_74drqc_slz0rkh0000gp/T/RtmpzDATn8/remotes173855bbd3d94/sealx017-SpaceANOVA-1efcced/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/8k/tj8qsmdj7_74drqc_slz0rkh0000gp/T/RtmpzDATn8/remotes173855bbd3d94/sealx017-SpaceANOVA-1efcced/DESCRIPTION’
 #   ─  preparing ‘SpaceANOVA’:
 #      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
 #   ─  checking for LF line-endings in source and make files and shell scripts
@@ -98,7 +98,8 @@ not for any pair of cell types involving A). “perm” is used to employ
 the permutation envelope-based adjustment to the summary functions in
 presence of holes in images and “nPerm” denotes the number of
 permutations to be used. “cores” is the number of cores to be used, if
-more than 1, mclapply (parallel package) is called.
+more than 1, mclapply (parallel package) is called to construct the
+permutation envelope.
 
 ``` r
 
@@ -124,19 +125,19 @@ Univ_p = p_res[[1]]
 Mult_p = p_res[[2]]
 print(Univ_p)
 #              Others           Tc           Th        alpha        delta
-# Others 6.970164e-01 1.498943e-01 6.332565e-01 6.449389e-15 5.699645e-05
-# Tc     1.502636e-01 1.036157e-05 6.577482e-01 4.362844e-10 3.370787e-01
-# Th     6.521664e-01 6.721671e-01 1.877356e-01 2.891809e-03 2.976241e-07
-# alpha  4.800974e-15 2.881793e-10 4.745685e-03 1.001688e-12 1.551907e-04
-# delta  7.054737e-05 3.044775e-01 1.644189e-07 1.430496e-04 3.631006e-05
-# beta   8.798295e-02 1.622627e-01 1.799709e-02 4.932250e-02 2.814794e-04
+# Others 6.953686e-01 1.556302e-01 6.424066e-01 7.161321e-15 6.231133e-05
+# Tc     1.568949e-01 1.077824e-05 6.414730e-01 7.574291e-10 3.198612e-01
+# Th     6.594019e-01 6.416210e-01 1.752191e-01 2.421338e-03 7.455633e-08
+# alpha  5.806365e-15 5.328962e-10 4.322053e-03 2.151769e-12 1.573135e-04
+# delta  7.790768e-05 2.906346e-01 2.426330e-08 1.447545e-04 4.169056e-05
+# beta   5.593301e-02 2.176442e-01 1.516080e-02 5.295945e-02 1.861904e-04
 #                beta
-# Others 8.323671e-02
-# Tc     1.587535e-01
-# Th     1.222499e-02
-# alpha  2.886812e-02
-# delta  5.384440e-06
-# beta   2.746689e-01
+# Others 5.306671e-02
+# Tc     2.238734e-01
+# Th     8.253150e-03
+# alpha  3.255212e-02
+# delta  7.222456e-06
+# beta   2.769459e-01
 ```
 
 ## Heatmap of -log10 of p-values
@@ -159,10 +160,19 @@ Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 ## Visualizing summary functions
 
 Next, we can check the summary functions corresponding to those pairs of
-cell types whose p-values turned out to be significant. In this case, we
-visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). We
-also display the point-wsie F-values which might help to understand
-which values of the radius r were most influential.
+cell types whose p-values turned out to be significant. Here, we
+visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). In
+every figure, the top panel shows subject-level mean functions (averaged
+across the images of a subject), while the bottom panel shows
+image-level summary functions. We also display the point-wise F-values
+which might help to understand which particular values of the radius r
+are most influential, i.e., where the maximum difference between the
+group-level summary functions are observed.
+
+### Pair: (alpha, alpha)
+
+We notice that the spatial co-occurrence of alpha cells is positive in
+both the groups but decreases in the “Onset” group.
 
 ``` r
 
@@ -174,12 +184,18 @@ Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise
 # [[1]]
 ```
 
-<img src="README_files/figure-gfm/plotting summary functions-1.png" width="100%" />
+<img src="README_files/figure-gfm/plotting summary functions 1-1.png" width="100%" />
 
     # 
     # [[2]]
 
-<img src="README_files/figure-gfm/plotting summary functions-2.png" width="100%" />
+<img src="README_files/figure-gfm/plotting summary functions 1-2.png" width="100%" />
+
+### Pair: (beta, Th)
+
+We notice that the spatial co-occurrence of (beta, Th) is negative in
+both the groups meaning that the cell types avoid each other. But the
+degree of avoidance decreases in the “Onset” group.
 
 ``` r
 
@@ -188,12 +204,12 @@ Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fva
 # [[1]]
 ```
 
-<img src="README_files/figure-gfm/plotting summary functions-3.png" width="100%" />
+<img src="README_files/figure-gfm/plotting summary functions 2-1.png" width="100%" />
 
     # 
     # [[2]]
 
-<img src="README_files/figure-gfm/plotting summary functions-4.png" width="100%" />
+<img src="README_files/figure-gfm/plotting summary functions 2-2.png" width="100%" />
 
 ## Visualizing cellular organization
 

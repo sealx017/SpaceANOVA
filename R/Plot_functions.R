@@ -97,9 +97,9 @@ Plot.functions<- function(Functional_results = Functional_results,
                    "across subjects")) +
     stat_summary(aes(y = Mean, group=1), fun = mean, colour = "red",
                  geom = "line", group=1, size = 1)+
-    theme(plot.title = element_text(hjust = 0.5, size = 10),
-          legend.title = element_text(size=10), #change legend title font size
-          legend.text = element_text(size=10),
+    theme(plot.title = element_text(hjust = 0.5, size = 8),
+          legend.title = element_text(size=8), #change legend title font size
+          legend.text = element_text(size=8),
           legend.position = "bottom",
           panel.background = element_blank()) + labs(x = "r", y = "g(r)") +
     guides(colour = guide_legend(override.aes = list(size=5))) +
@@ -114,9 +114,9 @@ Plot.functions<- function(Functional_results = Functional_results,
                  fun = mean, colour = "red", size = 1, geom = "line", group=1) +
     ggtitle(paste0('Centered summary functions of pair: \n  (', paste0(pair, collapse = ", ") , ")",
                    " across images")) +
-    theme(plot.title = element_text(hjust = 0.5, size = 10),
-          legend.title = element_text(size=10), #change legend title font size
-          legend.text = element_text(size=10),
+    theme(plot.title = element_text(hjust = 0.5, size = 8),
+          legend.title = element_text(size=8), #change legend title font size
+          legend.text = element_text(size=8),
           legend.position = "bottom",
           panel.background = element_blank())+ labs(x = "r", y = "g(r)") +
     guides(colour = guide_legend(override.aes = list(size=5))) +
@@ -129,9 +129,9 @@ Plot.functions<- function(Functional_results = Functional_results,
     UniF = ggplot(unidat, aes(x = r, y = Fval))+
       geom_point(size=0.5) +
       ggtitle(paste0('Accompanying point-wise F values')) +
-      theme(plot.title = element_text(hjust = 0.5, size = 10),
-            legend.title = element_text(size=10), #change legend title font size
-            legend.text = element_text(size=10),
+      theme(plot.title = element_text(hjust = 0.5, size = 8),
+            legend.title = element_text(size=8), #change legend title font size
+            legend.text = element_text(size=8),
             legend.position = "bottom",
             panel.background = element_blank())+ labs(x = "r", y = "F(r)") +
       guides(colour = guide_legend(override.aes = list(size=5)))
@@ -141,9 +141,9 @@ Plot.functions<- function(Functional_results = Functional_results,
     MulF = ggplot(Muldat, aes(x = r, y = Fval))+
       geom_point(size=0.5) +
       ggtitle(paste0('Accompanying point-wise F values')) +
-      theme(plot.title = element_text(hjust = 0.5, size = 10),
-            legend.title = element_text(size=10), #change legend title font size
-            legend.text = element_text(size=10),
+      theme(plot.title = element_text(hjust = 0.5, size = 8),
+            legend.title = element_text(size=8), #change legend title font size
+            legend.text = element_text(size=8),
             legend.position = "bottom",
             panel.background = element_blank())+ labs(x = "r", y = "F(r)")
 
@@ -188,17 +188,17 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
   for(image_id in image_info_wide[1:3, 1]){
     one_subject_one_image = one_subject[one_subject$imageID == image_id, ]
     if(is.null(palette) == FALSE){assign(paste0("simple_mean_", r), one_subject_one_image  %>%
-             ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 1) +
+             ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
              theme(legend.position = "bottom",
-             plot.title = element_text(hjust = 0.5)) +
+             plot.title = element_text(hjust = 0.5, size = 4)) +
              scale_color_manual(values = palette) +
              guides(colour = guide_legend(override.aes = list(size = 2))) +
              ggtitle(paste0("Image ",  image_id, " from subject ", ID))
            )}
     else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
-             ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 1) +
+             ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
              theme(legend.position = "bottom",
-                   plot.title = element_text(hjust = 0.5)) +
+                   plot.title = element_text(hjust = 0.5, size = 4), title.s) +
              guides(colour = guide_legend(override.aes = list(size = 2))) +
              ggtitle(paste0("Image ",  image_id, " from subject ", ID)))}
 
