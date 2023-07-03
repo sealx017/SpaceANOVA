@@ -133,7 +133,7 @@ Functional.objects <- function(Final_result = Final_result,
 
 
 Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
-                                  which_mean = NULL,
+                                  which_mean = "simple",
                                   pairs = NULL, print = F)
 {
   if(which_mean == "weighted"){
