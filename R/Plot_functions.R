@@ -185,7 +185,7 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
                             timevar = "cellType", direction = "wide")
 
   r = 1
-  for(image_id in image_info_wide[1:3, 1]){
+  for(image_id in image_info_wide[1:4, 1]){
     one_subject_one_image = one_subject[one_subject$imageID == image_id, ]
     if(is.null(palette) == FALSE){assign(paste0("simple_mean_", r), one_subject_one_image  %>%
              ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
@@ -206,7 +206,7 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
   }
 
   three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2, simple_mean_3),
-                             ncol = 3, main = paste0("Celltypes: ", paste0(pairs, collapse = ", ")))
+                             ncol = 2, nrow = 2, main = paste0("Celltypes: ", paste0(pairs, collapse = ", ")))
   return(three_plots)
 }
 

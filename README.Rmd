@@ -2,7 +2,7 @@
 title: "SpaceANOVA"
 author: Souvik Seal
 output: 
- html_document 
+ html_document
 ---
 <style type="text/css">
 .main-container {
@@ -49,7 +49,6 @@ require(gridExtra)
 Next, we import the type 1 diabetis melitus (T1DM) IMC dataset [1]. The input data should have a simple form: a) rows should correspond to individual cells, and b) six columns should correspond to the group, subject, and image indices of the cell, along with it's x,y co-ordinates and cell type. In the original dataset, there were three groups of subjects: "Non-diabetic", "Onset", and "Long-duration" (4 in each group). We truncated the dataset to have only the first two groups for simplicity. It should be highlighted that our method can handle any number of groups (more than 2). 
 
 ```{r loading the marker expression, out.width = "50%"}
-
 data("IMC_T1DM")
 knitr::kable(head(IMC_T1DM), format="markdown")
 IMC_T1DM %>% group_by(Group, ID) %>% reframe(n = n()) # check group and subject IDs, and respective cell counts (spread across multiple images)
@@ -86,7 +85,6 @@ print(Univ_p)
 Display the -log10 of the p-values using heatmap.
 
 ```{r P-value visualization,  out.width="40%"}
-
 Plot.heatmap(Univ_p, main = "SpaceANOVA Univ.")
 Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 
@@ -94,15 +92,14 @@ Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 
 ## Visualizing summary functions
 
-Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. Here, we visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). In every figure, the top panel shows subject-level mean functions (averaged across the images of a subject), while the bottom panel shows image-level summary functions. We also display the point-wise F-values which might help to understand which particular values of the radius r are most influential, i.e., where the maximum difference between the group-level summary functions are observed. 
+Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. Here, we visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). For every pair, the first panel shows subject-level mean functions (averaged across the images of a subject), while the second panel shows image-level summary functions. We also display the point-wise F-values which might help to understand which particular values of the radius r are most influential, i.e., where the maximum difference between the group-level summary functions are observed. 
 
 ### Pair: (alpha, alpha)
 
 We notice that the spatial co-occurrence of alpha cells is positive in both the groups but
 decreases in the "Onset" group.
 
-```{r plotting summary functions 1,  out.width="70%"}
-
+```{r plotting summary functions 1,  out.width="90%"}
 Pointwise_Fvals = Final_result[[1]][[2]]
 Functional_results = Final_result[[2]]
 
@@ -115,8 +112,7 @@ Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise
 
 We notice that the spatial co-occurrence of (beta, Th) is negative in both the groups meaning that the cell types avoid each other. But the degree of avoidance decreases in the "Onset" group.
 
-```{r plotting summary functions 2,  out.width="70%"}
-
+```{r plotting summary functions 2,  out.width="90%"}
 # Pair: (beta, Tc)
 Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fvals)
 
@@ -124,10 +120,9 @@ Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fva
 
 ## Visualizing cellular organization
 
-We canvisualize cellular organization in different images of every subject. Here, 3 images are shown for two subjects, "6126" from group "Non-diabetic" and "6414" from group "Onset". 
+We canvisualize cellular organization in different images of every subject. Here, 4 images each are shown for two subjects, "6126" from group "Non-diabetic" and "6414" from group "Onset". 
 
-```{r plotting celluar organization,  out.width="70%"}
-
+```{r plotting celluar organization,  out.width="90%"}
 table(IMC_T1DM$cellType)
 palette = c("darkorchid1","red", "cyan", "grey", "blue", "green") #assign colors to cell types 
 
