@@ -48,7 +48,7 @@ knitr::kable(head(IMC_T1DM), format="markdown")
 ## Compute the summary functions and perform association analysis
 
 This function can be used to perform the entire analysis at one go, starting from summary function estimation to the univariate and multivariate FANOVA-based association analyses. 
-
+The function takes several input parameters out of which the most important ones are displayed below. "fixed_r" corresponds to the grid values of radius r. "Summary_function" corresponds to which summary function to be used: g, K, or L.  "Hard_ths" corresponds to the lowest number of a particular cell type, say A, that an image can have (the image will be dropped if not for any pair of cell types involving A). "perm" is used to employ the permutation envelope-based adjustment to the summary functions in presence of holes in images and "nPerm" denotes the number of permutations to be used. "cores" is the number of cores to be used, if more than 1, mclapply (parallel package) is called. 
 
 
 ```{r Computing spatial summary functions, and performing both univariate and multivariate differential co-occurrence analysis, echo = T, results = T}
