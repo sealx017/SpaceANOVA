@@ -22,7 +22,7 @@ process and functional ANOVA". It can be used to study differential spatial co-o
 
 ## Loading the package
 
-We install and load the developmental version of MIAMI from GitHub.
+We install and load the developmental version of SpaceANOVA from GitHub.
 
 ```{r loading packages, message=FALSE}
 
@@ -31,36 +31,26 @@ require(SpaceANOVA)
 
 ```
 
-## Loading the example datasets
+## Loading the example dataset
 
-Next, we import the type 1 diabetis melitus (T1DM) IMC dataset.
+Next, we import the type 1 diabetis melitus (T1DM) IMC dataset [1].
 
 ```{r loading the marker expression, out.width = "50%"}
 
-data("marker_data")
-knitr::kable(head(marker_data), format="markdown")
+data("IMC_T1DM")
+knitr::kable(head(IMC_T1DM), format="markdown")
 
 ```
 
-## Compute EQMI\*, EQMI and CSQMI with an arbitrary data matrix
+## Perform the analysis
 
 * We start by showing how to compute the MI-based measures, EQMI\*, EQMI, and CSQMI (Principe 2010) between any arbitrary set of random variables (r.v.'s) from a general data-frame i.e., when the data does not necessarily come from multiplex imaging platforms. We create a matrix named Data_matrix with 2500 samples and 5 columns corresponding to five r.v.'s and use it in the function named QMI to estimate the measures.
 
 
-* A novelty of the estimation algorithm is that the quantities are computed in a step-wise fashion. It means that along with the EQMI\* between the full set of markers, one can easily extract the EQMI\* between several smaller sets of markers. For example, with $p$ = 5 markers, (1, 2, 3, 4, 5), the EQMI\* between all the following sets of markers can be extracted in a single estimation procedure,
-    + (1, 2), denoted by EQMI*_12
-    + (1, 2, 3), denoted by EQMI*_123
-    + (1, 2, 3, 4), denoted by EQMI*_1234
-    + (1, 2, 3, 4, 5), denoted by EQMI*_12345.
-
-* The estimation algorithm requires selecting bandwidth parameters for each of the r.v.'s. the default option, bandwidth = "Hpi" uses the multivariate plug-in bandwidth matrix described in Wand, M. P., & Jones, M. C. (1994). However, in larger datasets (especially, for large $p$) for faster computation, bandwidth = "Ind", which chooses bandwidth by Silverman's rule (Silverman, B.W. (2018)) for every r.v., can be used. 
-
 
 ```{r Computing EQMI*, EQMI and CSQMI with an arbitrary data matrix, echo = T, results = T}
 
-Data_matrix = marker_data[1:2500, -1]
-QMIs = QMI(Data_matrix, bandwidth = "HPI", measure = "All", var_names = T)
-print(QMIs)
+Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 1), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 50,  print = T)
 
 ```
 
@@ -138,9 +128,14 @@ p = biv_dens_plot(f_12, maxs = c(q1, q2))
 
 ## References
 
-a\) Baddeley, A., Rubak, E., and Turner, R. (2015). Spatial point patterns: methodology and applications with R. CRC press.
+1\) Damond, N., Engler, S., Zanotelli, V. R., Schapiro, D., Wasserfall, C. H.,
+Kusmartseva, I., Nick, H. S., Thorel, F., Herrera, P. L., Atkinson, M. A., et al.
+(2019). A map of human type 1 diabetes progression by imaging mass cytometry.
+Cell metabolism, 29(3), 755–768.
 
-b\) Zhang, J.-T. (2013). Analysis of variance for functional data. CRC press.
+2\) Baddeley, A., Rubak, E., and Turner, R. (2015). Spatial point patterns: methodology and applications with R. CRC press.
+
+3\) Zhang, J.-T. (2013). Analysis of variance for functional data. CRC press.
 
 
 
