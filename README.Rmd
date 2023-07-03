@@ -54,7 +54,7 @@ IMC_T1DM %>% group_by(Group, ID) %>% reframe(n = n()) # check group and subject 
 ## Compute the summary functions and perform association analysis
 
 This function can be used to perform the entire analysis at one go, starting from summary function estimation to the univariate and multivariate FANOVA-based association analyses. 
-The function takes several input parameters out of which the most important ones are displayed below. "fixed_r" corresponds to the grid values of radius r. "Summary_function" corresponds to which summary function to be used: g, K, or L.  "Hard_ths" corresponds to the lowest number of a particular cell type, say A, that an image can have (the image will be dropped if not for any pair of cell types involving A). "perm" is used to employ the permutation envelope-based adjustment to the summary functions in presence of holes in images and "nPerm" denotes the number of permutations to be used. "cores" is the number of cores to be used, if more than 1, mclapply (parallel package) is called. 
+The function takes several input parameters out of which the most important ones are displayed below. "fixed_r" corresponds to the grid values of radius r. "Summary_function" corresponds to which summary function to be used: g, K, or L.  "Hard_ths" corresponds to the lowest number of a particular cell type, say A, that an image can have (the image will be dropped if not for any pair of cell types involving A). "perm" is used to employ the permutation envelope-based adjustment to the summary functions in presence of holes in images and "nPerm" denotes the number of permutations to be used. "cores" is the number of cores to be used, if more than 1, mclapply (parallel package) is called to construct the permutation envelope.
 
 
 ```{r Computing spatial summary functions, and performing both univariate and multivariate differential co-occurrence analysis, echo = T, results = T}
@@ -89,15 +89,28 @@ Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 
 ## Visualizing summary functions
 
-Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. In this case, we visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). We also display the point-wsie F-values which might help to understand which values of the radius r were most influential.
+Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. Here, we visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). In every figure, the top panel shows subject-level mean functions (averaged across the images of a subject), while the bottom panel shows image-level summary functions. We also display the point-wise F-values which might help to understand which particular values of the radius r are most influential, i.e., where the maximum difference between the group-level summary functions are observed. 
 
-```{r plotting summary functions}
+### Pair: (alpha, alpha)
+
+We notice that the spatial co-occurrence of alpha cells is positive in both the groups but
+decreases in the "Onset" group.
+
+```{r plotting summary functions 1}
 
 Pointwise_Fvals = Final_result[[1]][[2]]
 Functional_results = Final_result[[2]]
 
 # Pair: (alpha, alpha)
 Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise_Fvals)
+
+```
+
+### Pair: (beta, Th)
+
+We notice that the spatial co-occurrence of (beta, Th) is negative in both the groups meaning that the cell types avoid each other. But the degree of avoidance decreases in the "Onset" group.
+
+```{r plotting summary functions 2}
 
 # Pair: (beta, Tc)
 Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fvals)
