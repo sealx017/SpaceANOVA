@@ -23,7 +23,7 @@ We install and load the developmental version of SpaceANOVA from GitHub.
 
 ```{r loading packages, message=FALSE}
 
-suppressWarnings(devtools::install_github('sealx017/SpaceANOVA'))
+suppressWarnings(devtools::install_github('sealx017/SpaceANOVA', quiet = TRUE))
 require(SpaceANOVA)
 
 require(spatstat)
@@ -91,7 +91,7 @@ Next, we can check the summary functions corresponding to those pairs of cell ty
 We notice that the spatial co-occurrence of alpha cells is positive in both the groups but
 decreases in the "Onset" group.
 
-```{r plotting summary functions 1,  out.width="90%"}
+```{r plotting summary functions 1,  out.width="100%", out.height = "80%"}
 Pointwise_Fvals = Final_result[[1]][[2]]
 Functional_results = Final_result[[2]]
 
@@ -104,7 +104,7 @@ Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise
 
 We notice that the spatial co-occurrence of (beta, Th) is negative in both the groups meaning that the cell types avoid each other. But the degree of avoidance decreases in the "Onset" group.
 
-```{r plotting summary functions 2,  out.width="90%"}
+```{r plotting summary functions 2,  out.width="90%", out.height = "70%"}
 # Pair: (beta, Tc)
 Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fvals)
 
@@ -114,7 +114,7 @@ Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fva
 
 We canvisualize cellular organization in different images of every subject. Here, 4 images each are shown for two subjects, "6126" from group "Non-diabetic" and "6414" from group "Onset". 
 
-```{r plotting celluar organization,  out.width="90%"}
+```{r plotting celluar organization,  out.width="800px", out.height = "800px"}
 table(IMC_T1DM$cellType)
 palette = c("darkorchid1","red", "cyan", "grey", "blue", "green") #assign colors to cell types 
 

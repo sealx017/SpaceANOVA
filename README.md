@@ -15,22 +15,7 @@ We install and load the developmental version of SpaceANOVA from GitHub.
 
 ``` r
 
-suppressWarnings(devtools::install_github('sealx017/SpaceANOVA'))
-# 
-# ── R CMD build ─────────────────────────────────────────────────────────────────
-#      checking for file ‘/private/var/folders/8k/tj8qsmdj7_74drqc_slz0rkh0000gp/T/RtmptMKohV/remotes50f274ef85d7/sealx017-SpaceANOVA-d3ff624/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/8k/tj8qsmdj7_74drqc_slz0rkh0000gp/T/RtmptMKohV/remotes50f274ef85d7/sealx017-SpaceANOVA-d3ff624/DESCRIPTION’
-#   ─  preparing ‘SpaceANOVA’:
-#      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-#   ─  checking for LF line-endings in source and make files and shell scripts
-#   ─  checking for empty or unneeded directories
-#        NB: this package now depends on R (>= 3.5.0)
-#        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
-#      serialize/load version 3 cannot be read in older versions of R.
-#      File(s) containing such objects:
-#        ‘SpaceANOVA/Data/IMC_T1DM.rda’
-#   ─  building ‘SpaceANOVA_0.1.0.tar.gz’
-#      
-# 
+suppressWarnings(devtools::install_github('sealx017/SpaceANOVA', quiet = TRUE))
 require(SpaceANOVA)
 
 require(spatstat)
@@ -123,20 +108,20 @@ p_res = p_extract(Final_result)
 Univ_p = p_res[[1]]
 Mult_p = p_res[[2]]
 print(Univ_p)
-#              Others           Tc           Th        alpha        delta
-# Others 7.030910e-01 1.572046e-01 6.421546e-01 5.140401e-15 6.434097e-05
-# Tc     1.589949e-01 1.143203e-05 6.626439e-01 6.437610e-10 2.164065e-01
-# Th     6.596069e-01 6.778576e-01 1.819694e-01 2.989368e-03 1.031986e-07
-# alpha  4.078163e-15 4.141564e-10 5.548258e-03 1.492405e-12 1.638608e-04
-# delta  7.833031e-05 1.901258e-01 1.451958e-08 1.532716e-04 4.315377e-05
-# beta   8.732236e-02 2.218902e-01 1.569129e-02 4.735376e-02 1.247981e-04
+#              Others           Tc          Th        alpha        delta
+# Others 6.989404e-01 1.541579e-01 0.639976780 6.119006e-15 5.954651e-05
+# Tc     1.554234e-01 1.071359e-05 0.653393507 6.877370e-10 3.253652e-01
+# Th     6.605091e-01 6.668094e-01 0.175159285 2.320952e-03 1.942847e-03
+# alpha  4.778777e-15 4.781497e-10 0.004253033 2.359871e-12 1.574602e-04
+# delta  7.254125e-05 2.934233e-01 0.001149728 1.411979e-04 4.138686e-05
+# beta   8.460704e-02 1.927666e-01 0.003808833 5.735812e-02 2.697225e-04
 #                beta
-# Others 8.273657e-02
-# Tc     2.228232e-01
-# Th     1.006248e-02
-# alpha  2.653912e-02
-# delta  3.232963e-06
-# beta   2.983041e-01
+# Others 7.965325e-02
+# Tc     1.926318e-01
+# Th     2.127004e-03
+# alpha  3.391455e-02
+# delta  9.125309e-06
+# beta   2.720038e-01
 ```
 
 ## Heatmap of -log10 of p-values
@@ -147,13 +132,13 @@ Display the -log10 of the p-values using heatmap.
 Plot.heatmap(Univ_p, main = "SpaceANOVA Univ.")
 ```
 
-<img src="README_files/figure-gfm/P-value visualization-1.png" width="40%" />
+<img src="README_files/figure-gfm/P-value visualization-1.png" width="50%" />
 
 ``` r
 Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 ```
 
-<img src="README_files/figure-gfm/P-value visualization-2.png" width="40%" />
+<img src="README_files/figure-gfm/P-value visualization-2.png" width="50%" />
 
 ## Visualizing summary functions
 
@@ -181,12 +166,12 @@ Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise
 # [[1]]
 ```
 
-<img src="README_files/figure-gfm/plotting summary functions 1-1.png" width="90%" />
+<img src="README_files/figure-gfm/plotting summary functions 1-1.png" width="100%" height="80%" />
 
     # 
     # [[2]]
 
-<img src="README_files/figure-gfm/plotting summary functions 1-2.png" width="90%" />
+<img src="README_files/figure-gfm/plotting summary functions 1-2.png" width="100%" height="80%" />
 
 ### Pair: (beta, Th)
 
@@ -200,12 +185,12 @@ Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fva
 # [[1]]
 ```
 
-<img src="README_files/figure-gfm/plotting summary functions 2-1.png" width="90%" />
+<img src="README_files/figure-gfm/plotting summary functions 2-1.png" width="90%" height="70%" />
 
     # 
     # [[2]]
 
-<img src="README_files/figure-gfm/plotting summary functions 2-2.png" width="90%" />
+<img src="README_files/figure-gfm/plotting summary functions 2-2.png" width="90%" height="70%" />
 
 ## Visualizing cellular organization
 
@@ -223,7 +208,7 @@ palette = c("darkorchid1","red", "cyan", "grey", "blue", "green") #assign colors
 Plot.cellTypes(data = IMC_T1DM, ID = "6126", palette = palette)
 ```
 
-<img src="README_files/figure-gfm/plotting celluar organization-1.png" width="90%" />
+<img src="README_files/figure-gfm/plotting celluar organization-1.png" width="800px" height="800px" />
 
     # TableGrob (2 x 2) "arrange": 4 grobs
     #   z     cells    name           grob
@@ -233,7 +218,7 @@ Plot.cellTypes(data = IMC_T1DM, ID = "6126", palette = palette)
     # 4 4 (2-2,2-2) arrange gtable[layout]
     Plot.cellTypes(data = IMC_T1DM, ID = "6414", palette = palette)
 
-<img src="README_files/figure-gfm/plotting celluar organization-2.png" width="90%" />
+<img src="README_files/figure-gfm/plotting celluar organization-2.png" width="800px" height="800px" />
 
     # TableGrob (2 x 2) "arrange": 4 grobs
     #   z     cells    name           grob
