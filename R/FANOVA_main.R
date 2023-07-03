@@ -119,7 +119,7 @@ Functional.objects <- function(Final_result = Final_result,
 #' @title Performs pairwise FANOVA both Univ. and Mult.
 #'
 #' @param Functional_results is a list output from the function "Functional.objects".
-#' @param which_mean is NULL (default) or "weighted" or "depth" depending on which type of
+#' @param which_mean is "simple" (default) or "weighted" or "depth" depending on which type of
 #' mean to be used. NULL corresponds to simple mean, while "weighted" and "depth" correspond to
 #' weighted and functional depth based means, respectively.
 #' @param pairs is NULL (default) or a specific pair of cell types for which the differential
@@ -298,7 +298,7 @@ All_in_one <- function(data, fixed_r = seq(0, 100, by = 1), Summary_function = "
                                           perm = perm, print = print)
   res = Pairwise.FANOVA.short(Functional_results = Functional_results, print = print)
 
-  return(res)
+  return(list(res,   Functional_results))
 }
 
 

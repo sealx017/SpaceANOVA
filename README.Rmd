@@ -36,7 +36,7 @@ require(SpaceANOVA)
 
 ## Loading the example dataset
 
-Next, we import the type 1 diabetis melitus (T1DM) IMC dataset [1]. The input data should have a simple form: a) rows should correspond to individual cells and six columns should correspond to the group, subject, and image indices of the cell, along with it's x,y co-ordinates and cell type. 
+Next, we import the type 1 diabetis melitus (T1DM) IMC dataset [1]. The input data should have a simple form: a) rows should correspond to individual cells, and b) six columns should correspond to the group, subject, and image indices of the cell, along with it's x,y co-ordinates and cell type. 
 
 ```{r loading the marker expression, out.width = "50%"}
 
@@ -47,7 +47,7 @@ knitr::kable(head(IMC_T1DM), format="markdown")
 
 ## Compute the summary functions and perform association analysis
 
-* We start by showing how to compute the MI-based measures, EQMI\*, EQMI, and CSQMI (Principe 2010) between any arbitrary set of random variables (r.v.'s) from a general data-frame i.e., when the data does not necessarily come from multiplex imaging platforms. We create a matrix named Data_matrix with 2500 samples and 5 columns corresponding to five r.v.'s and use it in the function named QMI to estimate the measures.
+This function can be used to perform the entire analysis at one go, starting from summary function estimation to the univariate and multivariate FANOVA-based association analyses. 
 
 
 
