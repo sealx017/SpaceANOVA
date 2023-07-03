@@ -1,3 +1,12 @@
+#' @title Generates heatmaps of the -log10 of p-values
+#'
+#' @param p_matrix is a dtaframe with p-values corresponding to every pair of cell types.
+#'
+#' @return a heatmap object from the pheatmap package.
+#'
+#' @export
+#'
+
 Plot.heatmap <- function(p_matrix, main = "SpaceANOVA Univ."){
   breaks <- c(0, 10, 0.5)
   breaks <- seq(from = breaks[1], to = breaks[2], by = breaks[3])
@@ -8,9 +17,21 @@ Plot.heatmap <- function(p_matrix, main = "SpaceANOVA Univ."){
                      color=pal, main=main, fontsize = 8))
 }
 
+#' @title Generates plots of summary functions for a pair of cell types
+#'
+#' @param Functional_results is a list of functional data generated using All_in_one function.
+#' @param pair is the pair of cell types to be visualized.
+#' @param Fvals is NULL or a list of point-wise F-values corresponding to SpaceANOVA Univ. and
+#' SpaceANOVA Mult. obtained from All_in_one function.
+#' @param range_lim is NULL or a vector of radius values on which the functions would be displayed.
+#' Must be in increasing order and a subset of fixed_r.
+#' @return a ggplot object with plots of mean and individual summary functions across groups.
+#'
+#' @export
+#'
 
 Plot.functions<- function(Functional_results = Functional_results,
-                        pairs = pairs, Fvals = NULL, range_lim = NULL)
+                        pair = pair, Fvals = NULL, range_lim = NULL)
 {
   Mean_frame = Functional_results[[1]]
   Wmean_frame = Functional_results[[2]]
@@ -20,8 +41,8 @@ Plot.functions<- function(Functional_results = Functional_results,
   ID_groups = Functional_results[[6]]
 
 
-  m1 = which(celltypes == pairs[1])
-  m2 = which(celltypes == pairs[2])
+  m1 = which(celltypes == pair[1])
+  m2 = which(celltypes == pair[2])
   mean_dat = as.data.frame(Mean_frame[ , m1, m2, ])
   good_IDs = ID_groups[, 1, m1, m2][which(rowSums(abs(mean_dat)) > 0)]
   good_IDs_group = ID_groups[, 2, m1, m2][which(rowSums(abs(mean_dat)) > 0)]
@@ -137,6 +158,19 @@ Plot.functions<- function(Functional_results = Functional_results,
     return(list(simple_mean, mult_mean))
   }
 }
+
+
+#' @title Generates plots of cellular organization of images of a particular subject
+#'
+#' @param data is the original data frame with cell level data.
+#' @param ID is a character denoting the ID of the subject to consider.
+#' @return a ggplot object of cellular organization (cells at their
+#' locations with colors according to their types) in different images of a subject.
+#'
+#' @export
+#'
+
+
 
 Plot.cellTypes <- function(data = data, ID = ID)
 {
