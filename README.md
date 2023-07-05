@@ -68,7 +68,7 @@ IMC_T1DM %>% group_by(Group, ID) %>% reframe(n = n()) # check group and subject 
 # 8 Onset        6380  129456
 ```
 
-## Compute the summary functions and perform association analysis
+## Computing the summary functions and performing association analysis
 
 This function can be used to perform the entire analysis at one go,
 starting from summary function estimation to the univariate and
@@ -103,20 +103,13 @@ p_res = p_extract(Final_result)
 Univ_p = p_res[[1]]
 Mult_p = p_res[[2]]
 print(Univ_p)
-#              Others           Tc           Th        alpha        delta
-# Others 7.024697e-01 1.573991e-01 0.6382938507 6.674092e-15 5.816769e-05
-# Tc     1.586754e-01 1.184891e-05 0.6527697145 6.337346e-10 2.884948e-01
-# Th     6.580101e-01 6.696070e-01 0.1670743225 3.603094e-03 7.285186e-04
-# alpha  5.226819e-15 4.773142e-10 0.0054382865 1.354056e-12 1.578452e-04
-# delta  7.196331e-05 2.449268e-01 0.0002732137 1.480241e-04 5.430399e-05
-# beta   7.662073e-02 2.182450e-01 0.0182817150 5.314018e-02 1.998622e-04
-#                beta
-# Others 7.249158e-02
-# Tc     2.179089e-01
-# Th     9.915701e-03
-# alpha  2.861402e-02
-# delta  5.455496e-06
-# beta   3.044358e-01
+#              Others        Tc         Th      alpha        delta         beta
+# Others 8.474846e-01 0.6866840 0.13303316 0.45069913 6.881440e-05 0.9678262142
+# Tc     7.434272e-01 0.6128606 0.29290798 0.73439983 8.210282e-01 0.2236579375
+# Th     1.523624e-01 0.3168485 0.48013287 0.08395683 2.089698e-01 0.3440282474
+# alpha  5.123916e-01 0.7582440 0.08562479 0.65836211 1.034695e-01 0.1737056382
+# delta  6.107978e-05 0.8436952 0.24046243 0.10190551 4.103538e-05 0.6035343705
+# beta   9.405535e-01 0.2248366 0.33913670 0.17895833 6.053171e-01 0.0001224144
 ```
 
 ## Heatmap of -log10 of p-values
@@ -139,7 +132,7 @@ Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
 
 Next, we can check the summary functions corresponding to those pairs of
 cell types whose p-values turned out to be significant. Here, we
-visualize the g-functions of pairs: (alpha, alpha) and (beta, Th). For
+visualize the g-functions of pairs: (alpha, delta) and (beta, Th). For
 every pair, the first panel shows subject-level mean functions (averaged
 across the images of a subject), while the second panel shows
 image-level summary functions. We also display the point-wise F-values
@@ -147,17 +140,17 @@ which might help to understand which particular values of the radius r
 are most influential, i.e., where the maximum difference between the
 group-level summary functions are observed.
 
-### Pair: (alpha, alpha)
+### Pair: (alpha, delta)
 
-We notice that the spatial co-occurrence of alpha cells is positive in
-both the groups but decreases in the “Onset” group.
+We notice that the spatial co-occurrence of alpha and delta cells is
+positive in both the groups but higher in the “Onset” group.
 
 ``` r
 Pointwise_Fvals = Final_result[[1]][[2]]
 Functional_results = Final_result[[2]]
 
-# Pair: (alpha, alpha)
-Plot.functions(Functional_results, pair = c("alpha", "alpha"), Fvals = Pointwise_Fvals)
+# Pair: (alpha, delta)
+Plot.functions(Functional_results, pair = c("alpha", "delta"), Fvals = Pointwise_Fvals)
 # [[1]]
 ```
 
@@ -189,7 +182,7 @@ Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fva
 
 ## Visualizing cellular organization
 
-We canvisualize cellular organization in different images of every
+We can visualize cellular organization in different images of every
 subject. Here, 4 images each are shown for two subjects, “6126” from
 group “Non-diabetic” and “6414” from group “Onset”.
 
