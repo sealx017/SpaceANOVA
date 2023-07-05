@@ -67,7 +67,12 @@ Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset =
         gall <- pcf(Kall, spar=1, method="c", divisor ="d")
         K_theo <- Kall$fns[[1]]$theo[2:R]; L_theo <- fixed_r[2:R]; g_theo = 1
         K_in = L_in = g_in = array(0, dim = c(n_celltypes, n_celltypes, R-1))
-        subset = which(celltypes %in% good_phenotypes)
+        #subset = which(celltypes %in% good_phenotypes)
+
+        subset = NULL
+        for(i in good_phenotypes){
+          subset = c(subset, which(celltypes == i))
+        }
 
         if(perm == "TRUE"){
           Perm = Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R, nPerm, cores)
