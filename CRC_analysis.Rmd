@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ```
 
 This is an R package implementing the proposed method from the paper, "SpaceANOVA: Spatial co-occurrence analysis of cell types in multiplex imaging data using point
-process and functional ANOVA". It can be used to study differential spatial co-occurrence of pairs of cell types across multiple groups, such as case/control, in multiplex imaging datasets.
+process and functional ANOVA". It can be used to study differential spatial co-occurrence of pairs of cell types across multiple groups, such as case/control, in multiplex imaging datasets. Here, we show how this package was used on the CRC dataset from yhe main manuscript.
 
 ## Loading the package
 
@@ -80,15 +80,13 @@ print(Univ_p)
 
 Display the -log10 of the p-values using heatmap.
 
-```{r P-value visualization,  out.width="50%"}
+```{r P-value visualization,  out.width="50%", out.height = "100%"}
 Plot.heatmap(Univ_p, main = "SpaceANOVA Univ.")
-Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
-
 ```
 
 ## Visualizing summary functions
 
-Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. Here, we visualize the g-functions of pairs: (b_cells, tumor_cells) and (vasculature, tumor_cells). For every pair, the first panel shows subject-level mean functions (averaged across the images of a subject), while the second panel shows image-level summary functions. We also display the point-wise F-values which might help to understand which particular values of the radius r are most influential, i.e., where the maximum difference between the group-level summary functions are observed. 
+Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. Here, we visualize the g-functions of pairs: (b_cells, tumor_cells) and (vasculature, tumor_cells). For every pair, the first panel shows subject-level mean functions (averaged across the images of a subject), while the second panel shows image-level summary functions. We do not display the point-wise F-values here, i.e., Fvals = NULL but one can specify Fvals = Pointwise_Fvals to check the associated pointwise F values. 
 
 ### Pair: (b_cells, tumor_cells)
 
@@ -99,7 +97,7 @@ Pointwise_Fvals = Final_result[[1]][[2]]
 Functional_results = Final_result[[2]]
 
 # Pair: (b_cells, tumor_cells)
-Plot.functions(Functional_results, pair = c("b_cells", "tumor_cells"), Fvals = Pointwise_Fvals)
+Plot.functions(Functional_results, pair = c("b_cells", "tumor_cells"), Fvals = NULL)
 
 ```
 
@@ -108,7 +106,7 @@ Plot.functions(Functional_results, pair = c("b_cells", "tumor_cells"), Fvals = P
 
 ```{r plotting summary functions 2,  out.width="100%", out.height = "80%"}
 # Pair: (beta, Tc)
-Plot.functions(Functional_results, pair = c("vasculature", "tumor_cells"), Fvals = Pointwise_Fvals)
+Plot.functions(Functional_results, pair = c("vasculature", "tumor_cells"), Fvals = NULL)
 
 ```
 
@@ -116,7 +114,7 @@ Plot.functions(Functional_results, pair = c("vasculature", "tumor_cells"), Fvals
 
 We can visualize cellular organization in different images of every subject. We create a reduced dataset first to focus only on b_cells, tumor_cells and vasculature.
 
-```{r plotting celluar organization,  out.width="100%", out.height = "700px"}
+```{r plotting celluar organization,  out.width="100%", out.height = "500px"}
 
 MIF_CRC_reduced = MIF_CRC
 MIF_CRC_reduced$cellType = as.character(MIF_CRC_reduced$cellType)
