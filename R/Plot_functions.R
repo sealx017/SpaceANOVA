@@ -207,7 +207,7 @@ Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL
     r = r+1
   }
   three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2, simple_mean_3, simple_mean_4),
-                               ncol = 2, nrow = 2, main = paste0("Celltypes: ", paste0(pairs, collapse = ", ")))
+                               ncol = 2, nrow = 2)
   }else{
     for(image_id in imageID){
     one_subject_one_image = one_subject[one_subject$imageID == image_id, ]
@@ -227,9 +227,8 @@ Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL
 
     r = r+1
     }
-    three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2,
-                               ncol = 2, nrow = 1, main = paste0("Celltypes: ",
-                               paste0(pairs, collapse = ", "))))
+    three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2),
+                               ncol = 2, nrow = 1)
     if(length(imageID) > 3){print("Only first two images will be displayed.")}
     }
 
