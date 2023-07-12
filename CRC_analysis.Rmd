@@ -1,0 +1,140 @@
+---
+title: "CRC_analysis"
+output: html_document
+date: "2023-07-12"
+---
+---
+title: "SpaceANOVA"
+author: Souvik Seal
+output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#",
+  out.width = "100%",
+  messages = FALSE,
+  warnings = FALSE
+)
+```
+
+This is an R package implementing the proposed method from the paper, "SpaceANOVA: Spatial co-occurrence analysis of cell types in multiplex imaging data using point
+process and functional ANOVA". It can be used to study differential spatial co-occurrence of pairs of cell types across multiple groups, such as case/control, in multiplex imaging datasets.
+
+## Loading the package
+
+We install and load the developmental version of SpaceANOVA from GitHub.
+
+```{r loading packages, message=FALSE}
+
+suppressWarnings(devtools::install_github('sealx017/SpaceANOVA', quiet = TRUE))
+require(SpaceANOVA)
+
+require(spatstat)
+require(tidyr)
+require(dplyr)
+require(fda.usc)
+require(ggplot2)
+require(cowplot)
+require(gridExtra)
+
+```
+
+## Loading the example dataset
+
+Next, we import the colorectal cancer (CRC) MIF dataset [1]. There are two groups of subjects: one group (18 subjects) with the “Crohn’slike reaction” (CLR) tumor invasive front, while the other group (17 subjects) is defined by the presence of diffuse inflammatory infiltration (DII).
+
+```{r loading the marker expression, out.width = "50%"}
+data("MIF_CRC")
+knitr::kable(head(IMC_T1DM), format="markdown")
+IMC_T1DM %>% group_by(Group, ID) %>% reframe(n = n()) # check group and subject IDs, and respective cell counts (spread across multiple images)
+
+```
+
+## Computing the summary functions and performing association analysis
+
+This function can be used to perform the entire analysis at one go, starting from summary function estimation to the univariate and multivariate FANOVA-based association analyses. 
+The function takes several input parameters out of which the most important ones are displayed below. "fixed_r" corresponds to the grid values of radius r. "Summary_function" corresponds to which summary function to be used: g, K, or L.  "Hard_ths" corresponds to the lowest number of a particular cell type, say A, that an image can have (the image will be dropped if not for any pair of cell types involving A). "perm" is used to employ the permutation envelope-based adjustment to the summary functions in presence of holes in images and "nPerm" denotes the number of permutations to be used. "cores" is the number of cores to be used, if more than 1, mclapply (parallel package) is called to construct the permutation envelope.
+
+
+```{r Computing spatial summary functions, and performing both univariate and multivariate differential co-occurrence analysis, echo = T, results = T}
+
+Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20, cores = 8)
+
+```
+
+## Extracting p-values 
+
+Extract the p-values of the univariate and multivariate tests: SpaceANOVA Univ. and SpaceANOVA Mult. and print.
+
+```{r P-value extraction}
+p_res = p_extract(Final_result)
+Univ_p = p_res[[1]]
+Mult_p = p_res[[2]]
+print(Univ_p)
+
+```
+
+## Heatmap of -log10 of p-values 
+
+
+Display the -log10 of the p-values using heatmap.
+
+```{r P-value visualization,  out.width="50%"}
+Plot.heatmap(Univ_p, main = "SpaceANOVA Univ.")
+Plot.heatmap(Mult_p, main = "SpaceANOVA Mult.")
+
+```
+
+## Visualizing summary functions
+
+Next, we can check the summary functions corresponding to those pairs of cell types whose p-values turned out to be significant. Here, we visualize the g-functions of pairs: (alpha, delta) and (beta, Th). For every pair, the first panel shows subject-level mean functions (averaged across the images of a subject), while the second panel shows image-level summary functions. We also display the point-wise F-values which might help to understand which particular values of the radius r are most influential, i.e., where the maximum difference between the group-level summary functions are observed. 
+
+### Pair: (alpha, delta)
+
+We notice that the spatial co-occurrence of alpha and delta cells is positive in both the groups but higher in the "Onset" group.
+
+```{r plotting summary functions 1,  out.width="100%", out.height = "80%"}
+Pointwise_Fvals = Final_result[[1]][[2]]
+Functional_results = Final_result[[2]]
+
+# Pair: (alpha, delta)
+Plot.functions(Functional_results, pair = c("alpha", "delta"), Fvals = Pointwise_Fvals)
+
+```
+
+### Pair: (beta, Th)
+
+We notice that the spatial co-occurrence of (beta, Th) is negative in both the groups meaning that the cell types avoid each other. But the degree of avoidance decreases in the "Onset" group.
+
+```{r plotting summary functions 2,  out.width="100%", out.height = "80%"}
+# Pair: (beta, Tc)
+Plot.functions(Functional_results, pair = c("beta", "Tc"), Fvals = Pointwise_Fvals)
+
+```
+
+## Visualizing cellular organization
+
+We can visualize cellular organization in different images of every subject. Here, 4 images each are shown for two subjects, "6126" from group "Non-diabetic" and "6414" from group "Onset". 
+
+```{r plotting celluar organization,  out.width="100%", out.height = "700px"}
+table(IMC_T1DM$cellType)
+palette = c("darkorchid1","red", "cyan", "grey", "blue", "green") #assign colors to cell types 
+
+Plot.cellTypes(data = IMC_T1DM, ID = "6126", palette = palette)
+Plot.cellTypes(data = IMC_T1DM, ID = "6414", palette = palette)
+
+```
+
+
+## References
+
+1\) Schürch, C. M., Bhate, S. S., Barlow, G. L., Phillips, D. J., Noti, L., Zlobec, I., ... & Nolan, G. P. (2020). Coordinated cellular neighborhoods orchestrate antitumoral immunity at the colorectal cancer invasive front. Cell, 182(5), 1341-1359.
+
+2\) Baddeley, A., Rubak, E., and Turner, R. (2015). Spatial point patterns: methodology and applications with R. CRC press.
+
+3\) Zhang, J.-T. (2013). Analysis of variance for functional data. CRC press.
+
+
+
