@@ -163,6 +163,8 @@ Plot.functions<- function(Functional_results = Functional_results,
 #'
 #' @param data is the original data frame with cell level data.
 #' @param ID is a character denoting the ID of the subject to consider.
+#' @param imageID is a character vector denoting the names of the images of a subject
+#' to consider. If NULL, the first 4 images of the subject will be displayed.
 #' @return a ggplot object of cellular organization (cells at their
 #' locations with colors according to their types) in different images of a subject.
 #'
@@ -171,7 +173,7 @@ Plot.functions<- function(Functional_results = Functional_results,
 
 
 
-Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
+Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL)
 {
   one_subject = data[data$ID == ID, ]
   subject_images = unique(one_subject$imageID)
@@ -185,6 +187,7 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
                             timevar = "cellType", direction = "wide")
 
   r = 1
+  if(is.null(imageID) == TRUE){
   for(image_id in image_info_wide[1:4, 1]){
     one_subject_one_image = one_subject[one_subject$imageID == image_id, ]
     if(is.null(palette) == FALSE){assign(paste0("simple_mean_", r), one_subject_one_image  %>%
@@ -194,8 +197,7 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
              scale_color_manual(values = palette) +
              guides(colour = guide_legend(override.aes = list(size = 2))) +
              ggtitle(paste0("Image ",  image_id, " from subject ", ID))
-           )}
-    else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
+           )}else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
              ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
              theme(legend.position = "bottom",
                    plot.title = element_text(hjust = 0.5, size = 8), title.s) +
@@ -204,9 +206,33 @@ Plot.cellTypes <- function(data = data, ID = ID, palette = NULL)
 
     r = r+1
   }
-
   three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2, simple_mean_3, simple_mean_4),
-                             ncol = 2, nrow = 2, main = paste0("Celltypes: ", paste0(pairs, collapse = ", ")))
+                               ncol = 2, nrow = 2, main = paste0("Celltypes: ", paste0(pairs, collapse = ", ")))
+  }else{
+    for(image_id in imageID){
+    one_subject_one_image = one_subject[one_subject$imageID == image_id, ]
+    if(is.null(palette) == FALSE){assign(paste0("simple_mean_", r), one_subject_one_image  %>%
+                                           ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
+                                           theme(legend.position = "bottom",
+                                                 plot.title = element_text(hjust = 0.5, size = 8)) +
+                                           scale_color_manual(values = palette) +
+                                           guides(colour = guide_legend(override.aes = list(size = 2))) +
+                                           ggtitle(paste0("Image ",  image_id, " from subject ", ID))
+    )}else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
+                  ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
+                  theme(legend.position = "bottom",
+                        plot.title = element_text(hjust = 0.5, size = 8), title.s) +
+                  guides(colour = guide_legend(override.aes = list(size = 2))) +
+                  ggtitle(paste0("Image ",  image_id, " from subject ", ID)))}
+
+    r = r+1
+    }
+    three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2,
+                               ncol = 2, nrow = 1, main = paste0("Celltypes: ",
+                               paste0(pairs, collapse = ", "))))
+    if(length(imageID) > 3){print("Only first two images will be displayed.")}
+    }
+
   return(three_plots)
 }
 

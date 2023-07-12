@@ -4,12 +4,15 @@
 \alias{Plot.cellTypes}
 \title{Generates plots of cellular organization of images of a particular subject}
 \usage{
-Plot.cellTypes(data = data, ID = ID, palette = NULL)
+Plot.cellTypes(data = data, ID = ID, imageID = NULL, palette = NULL)
 }
 \arguments{
 \item{data}{is the original data frame with cell level data.}
 
 \item{ID}{is a character denoting the ID of the subject to consider.}
+
+\item{imageID}{is a character vector denoting the names of the images of a subject
+to consider. If NULL, the first 4 images of the subject will be displayed.}
 }
 \value{
 a ggplot object of cellular organization (cells at their
