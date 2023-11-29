@@ -11,9 +11,9 @@ Spat.summary(
   ID_subset = NULL,
   celltypes = NULL,
   Hard_ths = 10,
-  homogeneous = TRUE,
   perm = TRUE,
   nPerm = 19,
+  homogeneous = TRUE,
   print = F,
   cores = 8
 )
@@ -36,11 +36,11 @@ have. For example, Hard_ths = 10 means that if an image has less than 10
 cells of a particular cell type A, in all pairwise comparisons involving A, such as (A, A), (A, B), (A, C),.., the image
 would be dropped from the analysis (B, C,.. are other cell types).}
 
-\item{homogeneous}{is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.}
-
 \item{perm}{is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.}
 
 \item{nPerm}{is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o}
+
+\item{homogeneous}{is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.}
 
 \item{print}{is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.}
 

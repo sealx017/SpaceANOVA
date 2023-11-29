@@ -14,9 +14,9 @@
 #' have. For example, Hard_ths = 10 means that if an image has less than 10
 #' cells of a particular cell type A, in all pairwise comparisons involving A, such as (A, A), (A, B), (A, C),.., the image
 #' would be dropped from the analysis (B, C,.. are other cell types).
-#' @param homogeneous is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.
 #' @param perm is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.
 #' @param nPerm is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o
+#' @param homogeneous is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.
 #' @param print is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.
 #' @param cores is an integer denoting the number of cores to be used.
 #'
@@ -26,8 +26,8 @@
 #' @export
 
 Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset = NULL,
-                         celltypes = NULL, Hard_ths = 10, homogeneous = TRUE, perm = TRUE,
-                         nPerm = 19, print = F, cores = 8)
+                         celltypes = NULL, Hard_ths = 10,  perm = TRUE,
+                         nPerm = 19, homogeneous = TRUE, print = F, cores = 8)
 {
   L = K = g = Image_counts = list()
   if(is.null(ID_subset) == T){IDs = unique(data$ID)

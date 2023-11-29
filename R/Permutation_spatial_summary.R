@@ -5,15 +5,15 @@
 #' @param subset is the subset of cell types considered.
 #' @param fixed_r is the vector of grid values of radius r.
 #' @param R is the maximum of the grid values.
-#' @param homogeneous is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.
 #' @param nPerm is an integer denoting the number of permutations to be used. Only used if perm = TRUE.
+#' @param homogeneous is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.
 #' @param cores is an integer denoting the number of cores to be used.
 #' @return It returns a list with the permutation-mean of summary functions
 #'
 #' @export
 
 
-Perm_spat <-function(PP_obj, n_celltypes, subset, fixed_r, R, nPerm = 19, cores = 8)
+Perm_spat <-function(PP_obj, n_celltypes, subset, fixed_r, R, nPerm = 19, homogeneous = TRUE, cores = 8)
 {
   if(homogeneous == TRUE){
     perm_func <- function(i){

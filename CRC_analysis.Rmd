@@ -59,7 +59,7 @@ versions of SpaceANOVA Univ. and SpaceANOVA Mult. (perm = FALSE) in this case.
 
 ```{r Computing spatial summary functions, and performing both univariate and multivariate differential co-occurrence analysis, echo = T, results = T}
 
-Final_result = All_in_one(data = MIF_CRC, fixed_r = seq(0, 100, by = 10), Summary_function = "g", Hard_ths = 10, perm = FALSE,  cores = 8)
+Final_result = All_in_one(data = MIF_CRC, fixed_r = seq(0, 100, by = 10), Summary_function = "g", Hard_ths = 20, homogeneous = FALSE, perm = TRUE, cores = 8)
 
 ```
 

@@ -14,6 +14,7 @@ All_in_one(
   Hard_ths = 10,
   perm = TRUE,
   nPerm = 50,
+  homogeneous = T,
   print = T,
   cores = 8
 )
@@ -42,6 +43,8 @@ would be dropped from the analysis (B, C,.. are other cell types).}
 \item{perm}{is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.}
 
 \item{nPerm}{is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o}
+
+\item{homogeneous}{is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.}
 
 \item{print}{is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.}
 

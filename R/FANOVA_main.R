@@ -279,6 +279,7 @@ Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
 #' would be dropped from the analysis (B, C,.. are other cell types).
 #' @param perm is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.
 #' @param nPerm is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o
+#' @param homogeneous is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.
 #' @param print is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.
 #' @param parallel is an integer denoting the number of cores to be used.
 #'
@@ -288,9 +289,10 @@ Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
 
 All_in_one <- function(data, fixed_r = seq(0, 100, by = 1), Summary_function = "g",
                        ID_subset = NULL, celltypes = NULL, Hard_ths = 10,
-                       perm = TRUE, nPerm = 50,  print = T, cores = 8){
+                       perm = TRUE, nPerm = 50, homogeneous = T, print = T, cores = 8){
   Final_result = Spat.summary(data = data, fixed_r, ID_subset,
                               celltypes, Hard_ths, perm = perm, nPerm = nPerm,
+                              homogeneous = homogeneous,
                               print = print, cores = cores)
   Functional_results = Functional.objects(Final_result = Final_result,
                                           Summary_function = Summary_function,
