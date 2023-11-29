@@ -13,7 +13,8 @@
 #' @export
 
 
-Perm_spat <-function(PP_obj, n_celltypes, subset, fixed_r, R, nPerm = 19, homogeneous = TRUE, cores = 8)
+Perm_spat <-function(PP_obj, n_celltypes, subset,
+                     fixed_r, R, nPerm = 19, homogeneous = TRUE, cores = 8)
 {
   if(homogeneous == TRUE){
     perm_func <- function(i){

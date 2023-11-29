@@ -78,7 +78,7 @@ Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset =
         }
 
         if(perm == "TRUE"){
-          Perm = Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R, homogeneous, nPerm, cores)
+          Perm = Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R,  nPerm, homogeneous, cores)
           K_theo = Perm[[1]]; L_theo = Perm[[2]]; g_theo = Perm[[3]]
         }
 
