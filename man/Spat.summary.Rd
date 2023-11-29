@@ -11,6 +11,7 @@ Spat.summary(
   ID_subset = NULL,
   celltypes = NULL,
   Hard_ths = 10,
+  homogeneous = TRUE,
   perm = TRUE,
   nPerm = 19,
   print = F,
@@ -27,13 +28,15 @@ increasing in order and start with 0.}
 \item{ID_subset}{is a vector of subject IDs on which the analysis will be restricted. If NULL (default), all
 of the subjects are used.}
 
-\item{celltypes}{is a vector of cell types on which the analysis will be restricted. If NULL (defaukt),
+\item{celltypes}{is a vector of cell types on which the analysis will be restricted. If NULL (default),
 all unique cell types (co-occurrence of pairs of all unique cell types) are considered.}
 
 \item{Hard_ths}{is a constant denoting the lowest number of a particular cell type that an image can
 have. For example, Hard_ths = 10 means that if an image has less than 10
 cells of a particular cell type A, in all pairwise comparisons involving A, such as (A, A), (A, B), (A, C),.., the image
 would be dropped from the analysis (B, C,.. are other cell types).}
+
+\item{homogeneous}{is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.}
 
 \item{perm}{is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.}
 

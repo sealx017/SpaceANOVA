@@ -8,12 +8,13 @@
 #' increasing in order and start with 0.
 #' @param ID_subset is a vector of subject IDs on which the analysis will be restricted. If NULL (default), all
 #' of the subjects are used.
-#' @param celltypes is a vector of cell types on which the analysis will be restricted. If NULL (defaukt),
+#' @param celltypes is a vector of cell types on which the analysis will be restricted. If NULL (default),
 #' all unique cell types (co-occurrence of pairs of all unique cell types) are considered.
 #' @param Hard_ths is a constant denoting the lowest number of a particular cell type that an image can
 #' have. For example, Hard_ths = 10 means that if an image has less than 10
 #' cells of a particular cell type A, in all pairwise comparisons involving A, such as (A, A), (A, B), (A, C),.., the image
 #' would be dropped from the analysis (B, C,.. are other cell types).
+#' @param homogeneous is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.
 #' @param perm is TRUE or FALSE denoting if permutation based adjustment will be performed or not, respectively.
 #' @param nPerm is an integer denoting the umber of permutations to be used. Only used if perm = TRUE o
 #' @param print is TRUE or FALSE based on whether progression details are to be shown once the algorithm starts till completeion.
@@ -25,7 +26,8 @@
 #' @export
 
 Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset = NULL,
-                         celltypes = NULL, Hard_ths = 10, perm = TRUE, nPerm = 19, print = F, cores = 8)
+                         celltypes = NULL, Hard_ths = 10, homogeneous = TRUE, perm = TRUE,
+                         nPerm = 19, print = F, cores = 8)
 {
   L = K = g = Image_counts = list()
   if(is.null(ID_subset) == T){IDs = unique(data$ID)
@@ -62,8 +64,9 @@ Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset =
         y = one_subject_one_image$y; yrange = range(y)
         PP_obj = ppp(x, y, xrange, yrange)
         m = marks(PP_obj) = factor(one_subject_one_image$cellType, good_phenotypes)
-
+        if(homogeneous == T){
         Kall <- alltypes(PP_obj, Kcross, r = fixed_r, correction = "isotropic")
+        }else{Kall <- alltypes(PP_obj, Kcross.inhom, r = fixed_r, correction = "isotropic")}  #,  sigma =  bw.relrisk(PP_obj))
         gall <- pcf(Kall, spar=1, method="c", divisor ="d")
         K_theo <- Kall$fns[[1]]$theo[2:R]; L_theo <- fixed_r[2:R]; g_theo = 1
         K_in = L_in = g_in = array(0, dim = c(n_celltypes, n_celltypes, R-1))
@@ -75,7 +78,7 @@ Spat.summary <- function(data = data, fixed_r = seq(0, 100, by = 1), ID_subset =
         }
 
         if(perm == "TRUE"){
-          Perm = Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R, nPerm, cores)
+          Perm = Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R, homogeneous, nPerm, cores)
           K_theo = Perm[[1]]; L_theo = Perm[[2]]; g_theo = Perm[[3]]
         }
 

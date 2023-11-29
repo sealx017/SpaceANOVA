@@ -20,6 +20,8 @@ Perm_spat(PP_obj, n_celltypes, subset, fixed_r, R, nPerm = 19, cores = 8)
 \item{nPerm}{is an integer denoting the number of permutations to be used. Only used if perm = TRUE.}
 
 \item{cores}{is an integer denoting the number of cores to be used.}
+
+\item{homogeneous}{is TRUE or FALSE denoting if homogeneous or inhomogeneous PPP to be used, respectively.}
 }
 \value{
 It returns a list with the permutation-mean of summary functions
