@@ -50,12 +50,14 @@ IMC_T1DM %>% group_by(Group, ID) %>% reframe(n = n()) # check group and subject 
 ## Computing the summary functions and performing association analysis
 
 This function can be used to perform the entire analysis at one go, starting from summary function estimation to the univariate and multivariate FANOVA-based association analyses. 
-The function takes several input parameters out of which the most important ones are displayed below. "fixed_r" corresponds to the grid values of radius r. "Summary_function" corresponds to which summary function to be used: g, K, or L.  "Hard_ths" corresponds to the lowest number of a particular cell type, say A, that an image can have (the image will be dropped if not for any pair of cell types involving A). "perm" is used to employ the permutation envelope-based adjustment to the summary functions in presence of holes in images and "nPerm" denotes the number of permutations to be used. "cores" is the number of cores to be used, if more than 1, mclapply (parallel package) is called to construct the permutation envelope.
+The function takes several input parameters out of which the key ones are displayed below. "fixed_r" corresponds to the grid values of radius r. "Summary_function" corresponds to which summary function to be used: g, K, or L. "Hard_ths" corresponds to a QC threshold in terms of cell counts.
+If in an image, a particular cell type 'A' has less than "Hard_ths" many cells, the image will be dropped from any pairwise comparisons involving cell type 'A'.
+"homogeneous" specifies whether homogeneous poisson point process (PPP) (and corresponding g function) or inhomogeneous PPP (and corresponding g function) is to be used. "interaction_adjustment" specifies whether to consider the interaction adjusted version of SpaceANOVA Mult. "perm" is used to employ the permutation envelope-based adjustment to the summary functions in presence of holes in images and "nPerm" denotes the number of permutations to be used. "cores" is the number of cores to be used, if more than 1, mclapply (parallel package) is called to construct the permutation envelope.
 
 
 ```{r Computing spatial summary functions, and performing both univariate and multivariate differential co-occurrence analysis, echo = T, results = T}
 
-Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20, cores = 8)
+Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, homogeneous = TRUE, interaction_adjustment = TRUE, perm = TRUE, nPerm = 20, cores = 8)
 
 ```
 

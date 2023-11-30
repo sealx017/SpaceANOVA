@@ -73,21 +73,25 @@ IMC_T1DM %>% group_by(Group, ID) %>% reframe(n = n()) # check group and subject 
 This function can be used to perform the entire analysis at one go,
 starting from summary function estimation to the univariate and
 multivariate FANOVA-based association analyses. The function takes
-several input parameters out of which the most important ones are
-displayed below. “fixed_r” corresponds to the grid values of radius r.
-“Summary_function” corresponds to which summary function to be used: g,
-K, or L. “Hard_ths” corresponds to the lowest number of a particular
-cell type, say A, that an image can have (the image will be dropped if
-not for any pair of cell types involving A). “perm” is used to employ
-the permutation envelope-based adjustment to the summary functions in
-presence of holes in images and “nPerm” denotes the number of
-permutations to be used. “cores” is the number of cores to be used, if
-more than 1, mclapply (parallel package) is called to construct the
+several input parameters out of which the key ones are displayed below.
+“fixed_r” corresponds to the grid values of radius r. “Summary_function”
+corresponds to which summary function to be used: g, K, or L. “Hard_ths”
+corresponds to a QC threshold in terms of cell counts. If in an image, a
+particular cell type ‘A’ has less than “Hard_ths” many cells, the image
+will be dropped from any pairwise comparisons involving cell type ‘A’.
+“homogeneous” specifies whether homogeneous poisson point process (PPP)
+(and corresponding g function) or inhomogeneous PPP (and corresponding g
+function) is to be used. “interaction_adjustment” specifies whether to
+consider the interaction adjusted version of SpaceANOVA Mult. “perm” is
+used to employ the permutation envelope-based adjustment to the summary
+functions in presence of holes in images and “nPerm” denotes the number
+of permutations to be used. “cores” is the number of cores to be used,
+if more than 1, mclapply (parallel package) is called to construct the
 permutation envelope.
 
 ``` r
 
-Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, perm = TRUE, nPerm = 20, cores = 8)
+Final_result = All_in_one(data = IMC_T1DM, fixed_r = seq(0, 100, by = 5), Summary_function = "g", Hard_ths = 10, homogeneous = TRUE, interaction_adjustment = TRUE, perm = TRUE, nPerm = 20, cores = 8)
 # [1] "Summary functions computed!"
 # [1] "Functions set up for FANOVA!"
 # [1] "FANOVA complete!"
@@ -103,13 +107,13 @@ p_res = p_extract(Final_result)
 Univ_p = p_res[[1]]
 Mult_p = p_res[[2]]
 print(Univ_p)
-#              Others        Tc         Th      alpha        delta         beta
-# Others 8.474846e-01 0.6866840 0.13303316 0.45069913 6.881440e-05 0.9678262142
-# Tc     7.434272e-01 0.6128606 0.29290798 0.73439983 8.210282e-01 0.2236579375
-# Th     1.523624e-01 0.3168485 0.48013287 0.08395683 2.089698e-01 0.3440282474
-# alpha  5.123916e-01 0.7582440 0.08562479 0.65836211 1.034695e-01 0.1737056382
-# delta  6.107978e-05 0.8436952 0.24046243 0.10190551 4.103538e-05 0.6035343705
-# beta   9.405535e-01 0.2248366 0.33913670 0.17895833 6.053171e-01 0.0001224144
+#              Others        Tc         Th     alpha        delta         beta
+# Others 8.450140e-01 0.6713253 0.05635947 0.4663050 8.454357e-05 0.9712633917
+# Tc     7.284767e-01 0.6754033 0.29303516 0.7863729 8.255700e-01 0.1931059860
+# Th     1.070937e-01 0.3458945 0.36258266 0.0612601 1.973432e-01 0.2948315115
+# alpha  5.043260e-01 0.8014883 0.05695650 0.6442208 1.143544e-01 0.1771360659
+# delta  7.041997e-05 0.8531404 0.22973006 0.1109615 7.419254e-05 0.6170926831
+# beta   9.549546e-01 0.1895035 0.27523690 0.1770348 6.208176e-01 0.0001680078
 ```
 
 ## Heatmap of -log10 of p-values
