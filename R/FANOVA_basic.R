@@ -162,7 +162,7 @@ MFanova.tests = function(data = data, contrast = NULL, interaction_adjustment = 
   dGPF_noint = ((N-G)/(N-G-2))^2/((trace_gammasq_noint)/p^2/contrast_rows)
 
   pvalueGPF_int = pchisq(intGPF/betaGPF_int, dGPF_int, lower.tail = FALSE)
-  if(add_interaction == TRUE){
+  if(interaction_adjustment == TRUE){
   pvalueGPF = ifelse(pvalueGPF_int < 0.05, pchisq(indGPF/betaGPF_noint,dGPF_noint,
                                                   lower.tail = FALSE),
                      pchisq(statGPF/betaGPF, dGPF, lower.tail = FALSE))
