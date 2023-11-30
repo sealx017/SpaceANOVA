@@ -8,7 +8,8 @@ Pairwise.FANOVA.short(
   Functional_results = Functional_results,
   which_mean = "simple",
   pairs = NULL,
-  print = F
+  print = F,
+  interaction_adjustment = TRUE
 )
 }
 \arguments{

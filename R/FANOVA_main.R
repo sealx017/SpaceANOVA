@@ -134,7 +134,7 @@ Functional.objects <- function(Final_result = Final_result,
 
 Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
                                   which_mean = "simple",
-                                  pairs = NULL, print = F)
+                                  pairs = NULL, print = F, interaction_adjustment = TRUE)
 {
   if(which_mean == "weighted"){
   Mean_frame = Functional_results[[2]]
@@ -289,7 +289,7 @@ Pairwise.FANOVA.short <- function(Functional_results = Functional_results,
 
 All_in_one <- function(data, fixed_r = seq(0, 100, by = 1), Summary_function = "g",
                        ID_subset = NULL, celltypes = NULL, Hard_ths = 10,
-                       perm = TRUE, nPerm = 50, homogeneous = T, print = T, cores = 8){
+                       perm = TRUE, nPerm = 50, homogeneous = T, interaction_adjustment = TRUE, print = T, cores = 8){
   Final_result = Spat.summary(data = data, fixed_r, ID_subset,
                               celltypes, Hard_ths, perm = perm, nPerm = nPerm,
                               homogeneous = homogeneous,
@@ -297,7 +297,7 @@ All_in_one <- function(data, fixed_r = seq(0, 100, by = 1), Summary_function = "
   Functional_results = Functional.objects(Final_result = Final_result,
                                           Summary_function = Summary_function,
                                           perm = perm, print = print)
-  res = Pairwise.FANOVA.short(Functional_results = Functional_results, print = print)
+  res = Pairwise.FANOVA.short(Functional_results = Functional_results, print = print, interaction_adjustment = interaction_adjustment)
 
   return(list(res,   Functional_results))
 }

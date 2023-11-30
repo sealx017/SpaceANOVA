@@ -15,6 +15,7 @@ All_in_one(
   perm = TRUE,
   nPerm = 50,
   homogeneous = T,
+  interaction_adjustment = TRUE,
   print = T,
   cores = 8
 )

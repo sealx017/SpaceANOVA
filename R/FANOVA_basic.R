@@ -68,7 +68,7 @@ UniFANOVA = function(data = data, contrast = NULL){
   res = list(pval = pvalueGPF, Fvals = list(frat[-1]))
 }
 
-MFanova.tests = function(data = data, contrast = NULL, parallel = FALSE, nslaves = NULL)
+MFanova.tests = function(data = data, contrast = NULL, interaction_adjustment = TRUE)
 {
   group.label0 = unique(data$Group)
   subject.label0 = unique(data$ID)
@@ -162,9 +162,11 @@ MFanova.tests = function(data = data, contrast = NULL, parallel = FALSE, nslaves
   dGPF_noint = ((N-G)/(N-G-2))^2/((trace_gammasq_noint)/p^2/contrast_rows)
 
   pvalueGPF_int = pchisq(intGPF/betaGPF_int, dGPF_int, lower.tail = FALSE)
+  if(add_interaction == TRUE){
   pvalueGPF = ifelse(pvalueGPF_int < 0.05, pchisq(indGPF/betaGPF_noint,dGPF_noint,
                                                   lower.tail = FALSE),
-                     pchisq(statGPF/betaGPF,dGPF, lower.tail = FALSE))
+                     pchisq(statGPF/betaGPF, dGPF, lower.tail = FALSE))
+  }else{pvalueGPF = pchisq(statGPF/betaGPF, dGPF, lower.tail = FALSE)}
 
   res = list(GPF_int = list(pval = pvalueGPF_int),
              GPF = list(pval = pvalueGPF),
