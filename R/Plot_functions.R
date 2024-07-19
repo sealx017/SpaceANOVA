@@ -227,8 +227,12 @@ Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL
 
     r = r+1
     }
-    three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2),
-                               ncol = 2, nrow = 1)
+    if(r == 2){
+    three_plots = simple_mean_1
+    }else{three_plots = grid.arrange(grobs = list(simple_mean_1, 
+                         simple_mean_2),
+                         ncol = 2, nrow = 1)}
+    
     if(length(imageID) > 3){print("Only first two images will be displayed.")}
     }
 
