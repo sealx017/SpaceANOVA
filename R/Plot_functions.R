@@ -232,7 +232,7 @@ Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL
     }else{three_plots = grid.arrange(grobs = list(simple_mean_1, simple_mean_2),
                          ncol = 2, nrow = 1)}
 
-    if(length(imageID) > 3){print("Only first two images are displayed.")}
+    if(length(imageID) > 2){print("Only first two images are displayed.")}
     }
 
   return(three_plots)
