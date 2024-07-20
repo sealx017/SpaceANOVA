@@ -200,7 +200,7 @@ Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL
            )}else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
              ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
              theme(legend.position = "bottom",
-                   plot.title = element_text(hjust = 0.5, size = 8), title.s) +
+                   plot.title = element_text(hjust = 0.5, size = 8)) +
              guides(colour = guide_legend(override.aes = list(size = 2))) +
              ggtitle(paste0("Image ",  image_id, " from subject ", ID)))}
 
@@ -221,7 +221,7 @@ Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL
     )}else{assign(paste0("simple_mean_", r), one_subject_one_image  %>%
                   ggplot( aes(x = x, y = y, color = cellType)) + geom_point(size = 0.7) +
                   theme(legend.position = "bottom",
-                        plot.title = element_text(hjust = 0.5, size = 8), title.s) +
+                        plot.title = element_text(hjust = 0.5, size = 8)) +
                   guides(colour = guide_legend(override.aes = list(size = 2))) +
                   ggtitle(paste0("Image ",  image_id, " from subject ", ID)))}
 
