@@ -237,6 +237,6 @@ Plot.cellTypes <- function(data = data, ID = ID,  imageID = NULL, palette = NULL
 
   return(three_plots)
 }
-# new updates
+# new updates to the main
 
 
